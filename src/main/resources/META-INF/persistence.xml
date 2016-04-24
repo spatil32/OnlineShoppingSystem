@@ -8,6 +8,10 @@
     <class>edu.iit.sat.itmd4515.spatil32.fp.model.Orders</class>
     <class>edu.iit.sat.itmd4515.spatil32.fp.model.Products</class>
     <class>edu.iit.sat.itmd4515.spatil32.fp.model.Wishlist</class>
+    <class>edu.iit.sat.itmd4515.spatil32.fp.model.Admin</class>
+    <class>edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin</class>
+    <class>edu.iit.sat.itmd4515.spatil32.fp.security.Group</class>
+    <class>edu.iit.sat.itmd4515.spatil32.fp.security.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

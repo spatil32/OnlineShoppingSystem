@@ -8,6 +8,7 @@ package edu.iit.sat.itmd4515.spatil32.fp.service;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,4 +29,10 @@ public class CustomerService extends AbstractService<Customer>
         return em.createNamedQuery("Customer.seeAllCustomers").getResultList();
     }
     
+    public Customer findByCustomerName(String username)
+    {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerByName", Customer.class);
+        query.setParameter("name", username);
+        return query.getSingleResult();
+    }
 }
