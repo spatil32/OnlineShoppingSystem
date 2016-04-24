@@ -19,6 +19,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 
 /**
  * Customer POJO consist of all data fields to be persisted, constructors, getters, setters and toString() method.
@@ -37,12 +41,25 @@ public class Customer
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
+    
+    @NotNull(message = "First name cannot be null.")
+    @Size(max = 45)
     private String firstName;
+    
+    @NotNull(message = "First name cannot be null.")
+    @Size(max = 45)
     private String lastName;
+    
     private int age;
     private char gender;
+    
+    @NotNull(message = "Address cannot be null.")
+    @Size(max = 45)
     private String address;
+    
+    @Pattern(regexp = "^(.+)@(.+)$", message = "Email must be in proper format")
     private String email;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
     private String phoneNo;
@@ -163,6 +180,20 @@ public class Customer
         this.password = password;
         this.isAdmin = isAdmin;
         this.basket = basket;
+    }
+
+    public Customer(String firstName, String lastName, int age, char gender, String address, String email, Date birthDate, String phoneNo, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.address = address;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.phoneNo = phoneNo;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = 'N';
     }
 
     /**
