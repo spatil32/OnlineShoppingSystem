@@ -6,6 +6,7 @@
 package edu.iit.sat.itmd4515.spatil32.fp.service;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
+import edu.iit.sat.itmd4515.spatil32.fp.web.LoginCustomer;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
@@ -33,6 +34,21 @@ public class CustomerService extends AbstractService<Customer>
     {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerByName", Customer.class);
         query.setParameter("name", username);
+        return query.getSingleResult();
+    }
+    
+    public Customer findByUsernameAndPassword(String username , String password)
+    {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.loginCustomer", Customer.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return query.getSingleResult();
+    }
+    
+    public Customer findByCustomerId(Integer id)
+    {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerById", Customer.class);
+        query.setParameter("id", id);
         return query.getSingleResult();
     }
 }

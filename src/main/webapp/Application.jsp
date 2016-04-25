@@ -16,4 +16,9 @@
 </form>
 <br/><br/>
 
+<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/loginCustomer"/>">
+    <button class="btn-lg" type="submit" value="Submit">Login Customer</button>
+    <label><b>This button lets user login to shopping account.</b></label>    
+</form>
+<br/><br/>
 <%@include file="./WEB-INF/jspf/footer.jspf" %>

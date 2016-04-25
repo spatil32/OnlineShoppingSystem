@@ -7,8 +7,10 @@ package edu.iit.sat.itmd4515.spatil32.fp.service;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Admin;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.security.Group;
 import edu.iit.sat.itmd4515.spatil32.fp.security.User;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -34,14 +36,15 @@ public class StartupBean
     @EJB
     AdminService adminService;
     
+    @EJB
+    ProductService productService;
+    
     public StartupBean() {
     }
     
     @PostConstruct
     private void init()
     {
-        //Customer admin = new Customer("admin", "admin", 27, 'M', "Pune", "admin@admin.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "admin", "admin", 'Y');
-        //customerService.create(admin);
         Group SystemAdmin = new Group("SystemAdmin", "This group is for Admin's only");
         Group SystemCustomer = new Group("SystemCustomer", "This group is for customers only");
         em.persist(SystemAdmin);
@@ -56,6 +59,19 @@ public class StartupBean
         
         adminService.create(admins);
         System.out.println("Added admin");
+        
+        
+       //Without security code
+       Customer adminCustomer = new Customer("admin", "admin", 27, 'M', "Pune", "admin@admin.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "admin", "admin", 'Y');
+       customerService.create(adminCustomer);
+
+       Customer newCustomer = new Customer("Shreyas", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "shreyas", "patil", 'N');
+       customerService.create(newCustomer);
+       
+        Products newProduct1 = new Products("LED TV", new Date(), 'E', 5000, 10, 150, 120);
+        Products newProduct2 = new Products("BOSE Speakers", new Date(), 'E', 800, 20, 50, 20);
+        productService.create(newProduct1);
+        productService.create(newProduct2);
 
     }
 }

@@ -33,7 +33,9 @@ import javax.validation.constraints.Size;
 @Table(name = "spatil32_Customer")
 @NamedQueries({
     @NamedQuery(name = "Customer.seeAllCustomers", query = "select c from Customer c"),
-    @NamedQuery(name = "Customer.findCustomerByName", query = "select c from Customer c where c.firstName = :name")
+    @NamedQuery(name = "Customer.findCustomerByName", query = "select c from Customer c where c.firstName = :name"),
+    @NamedQuery(name = "Customer.loginCustomer", query = "select c from Customer c where c.username = :username and c.password = :password"),
+    @NamedQuery(name = "Customer.findCustomerById", query = "select c from Customer c where c.customerId = :id")
 })
 public class Customer 
 {
@@ -93,6 +95,12 @@ public class Customer
     public Customer() {
     }
 
+    public Customer(String username, String password) 
+    {
+        this.username = username;
+        this.password = password;
+    }
+     
     /**
      *
      * @param firstName indicates first name
