@@ -33,7 +33,8 @@ import javax.persistence.TemporalType;
 @Table(name = "spatil32_Basket")
 @NamedQueries({
     @NamedQuery(name = "Basket.seeAllCustomersBaskets", query = "select b from Basket b"),
-    @NamedQuery(name = "Basket.findBasketByCustomerId", query = "select b from Basket b where b.customer.customerId = :id")
+    @NamedQuery(name = "Basket.findBasketByCustomerId", query = "select b from Basket b where b.customer.customerId = :id"),
+    @NamedQuery(name = "Basket.findBasketByBasketId", query = "select b from Basket b where b.basketId = :id")
 })
 
 public class Basket {

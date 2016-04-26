@@ -40,7 +40,6 @@
                 </tr>
         </c:forEach>
         <br/>
-        <input 
     </tbody>
 </table>
     <input class="btn-danger" type="submit" name="submitCart" id="submitCart"/>

@@ -7,14 +7,15 @@ package edu.iit.sat.itmd4515.spatil32.fp.web;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
-import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
-import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -23,26 +24,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Dell
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
-public class AddToCart extends HttpServlet
+@WebServlet(name = "RemoveFromCart", urlPatterns = {"/removeFromCart"})
+public class RemoveFromCart extends HttpServlet 
 {
     @EJB
-    ProductService productService;
-
+    CustomerService customerService;
+    
     @EJB
     BasketService basketService;
     
     @EJB
-    CustomerService customerService;
+    OrderService orderService;
     
-    static List<Products> cartProducts = new ArrayList<>();
-    private static final Logger LOG = Logger.getLogger(AddToCart.class.getName());
+    private static final Logger LOG = Logger.getLogger(RemoveFromCart.class.getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -60,10 +59,10 @@ public class AddToCart extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddToCart</title>");            
+            out.println("<title>Servlet RemoveFromCart</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddToCart at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RemoveFromCart at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -82,19 +81,16 @@ public class AddToCart extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        Long productId = null;
-        if(!WebUtil.isEmpty(request.getParameter("productId")))
+        Long basketId = null;
+        if(!WebUtil.isEmpty(request.getParameter("basketId")))
         {
+            basketId = Long.parseLong(request.getParameter("basketId"));
             Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
-            productId = Long.parseLong(request.getParameter("productId"));
-            Products cartProduct = productService.findByProductID(productId);
-            AddToCart.cartProducts.add(cartProduct);
-            Basket newBasket = new Basket(new Date(), 1, cartProduct.getPrice(), loggedInCustomer);
-            newBasket.addProducts(cartProduct);
-            basketService.create(newBasket);
+            Basket deleteBasket = basketService.findBasketByBasketId(basketId);
+            LOG.info("SIZE : " + deleteBasket.getProducts().size());
+            //basketService.delete(deleteBasket);
+            ////TO COMPLETE//////
         }
-        request.setAttribute("allProducts", productService.findAll());
-        request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
 
     /**
@@ -109,17 +105,21 @@ public class AddToCart extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        request.setAttribute("basketProducts", basketService.findAll());
-        //request.setAttribute("selectedProducts", cartProducts);
-        HttpSession session = request.getSession();
-        session.setAttribute("selectedProducts", cartProducts);
-        
-        
-        request.getRequestDispatcher("/WEB-INF/pages/CartProducts.jsp").forward(request, response);
-        for (Products cartProduct : cartProducts) 
+        Date shoppingDate = new Date();
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(shoppingDate);
+        cal.add(Calendar.DATE, 7);
+        Date deliveryDate = cal.getTime();
+        Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
+        int totalBillAmount = 0;
+        List<Basket> allBasket = basketService.findAll();
+        for (Basket basket : allBasket)
         {
-            LOG.info(cartProduct.toString());
+            totalBillAmount = totalBillAmount + basket.getPricePerUnit();
         }
+        Orders orders = new Orders(loggedInCustomer, totalBillAmount, deliveryDate);
+        orderService.create(orders);
+        LOG.info("Total bill amount is : " + totalBillAmount);
     }
 
     /**
