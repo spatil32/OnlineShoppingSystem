@@ -42,6 +42,6 @@
         <br/>
     </tbody>
 </table>
-    <input class="btn-danger" type="submit" name="submitCart" id="submitCart"/>
+<input class="btn-danger" type="submit" value="Go To Cart" name="submitCart" id="submitCart"/>
 </form>
 <%@include file="/WEB-INF/jspf/footer.jspf" %>                

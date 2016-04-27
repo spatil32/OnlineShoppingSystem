@@ -8,9 +8,10 @@ package edu.iit.sat.itmd4515.spatil32.fp.service;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
 import java.util.List;
 import javax.ejb.Stateless;
+
 /**
  *
- * @author Dell
+ * @author patils03
  */
 @Stateless
 public class OrderService extends AbstractService<Orders>

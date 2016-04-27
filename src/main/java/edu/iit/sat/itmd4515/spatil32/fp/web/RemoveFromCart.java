@@ -24,10 +24,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Dell
+ * @author patils03
  */
 @WebServlet(name = "RemoveFromCart", urlPatterns = {"/removeFromCart"})
 public class RemoveFromCart extends HttpServlet 
@@ -42,6 +43,8 @@ public class RemoveFromCart extends HttpServlet
     OrderService orderService;
     
     private static final Logger LOG = Logger.getLogger(RemoveFromCart.class.getName());
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -103,23 +106,9 @@ public class RemoveFromCart extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+            throws ServletException, IOException 
     {
-        Date shoppingDate = new Date();
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(shoppingDate);
-        cal.add(Calendar.DATE, 7);
-        Date deliveryDate = cal.getTime();
-        Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
-        int totalBillAmount = 0;
-        List<Basket> allBasket = basketService.findAll();
-        for (Basket basket : allBasket)
-        {
-            totalBillAmount = totalBillAmount + basket.getPricePerUnit();
-        }
-        Orders orders = new Orders(loggedInCustomer, totalBillAmount, deliveryDate);
-        orderService.create(orders);
-        LOG.info("Total bill amount is : " + totalBillAmount);
+        
     }
 
     /**

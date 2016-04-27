@@ -7,14 +7,18 @@ package edu.iit.sat.itmd4515.spatil32.fp.web;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -29,21 +33,23 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dell
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
-public class AddToCart extends HttpServlet
+@WebServlet(name = "ConfirmedOrder", urlPatterns = {"/confirmedOrder"})
+public class ConfirmedOrder extends HttpServlet 
 {
     @EJB
-    ProductService productService;
-
-    @EJB
-    BasketService basketService;
+    OrderService orderService;
     
     @EJB
     CustomerService customerService;
     
-    public List<Products> cartProducts = new ArrayList<>();
-    private static final Logger LOG = Logger.getLogger(AddToCart.class.getName());
+    @EJB
+    BasketService basketService;
     
+    @EJB
+    ProductService productService;
+    
+    private static final Logger LOG = Logger.getLogger(ConfirmedOrder.class.getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,10 +67,10 @@ public class AddToCart extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddToCart</title>");            
+            out.println("<title>Servlet ConfirmedOrder</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddToCart at " + request.getContextPath() + "</h1>");
+           
             out.println("</body>");
             out.println("</html>");
         }
@@ -81,23 +87,26 @@ public class AddToCart extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+            throws ServletException, IOException 
     {
-        Long productId = null;
-        if(!WebUtil.isEmpty(request.getParameter("productId")))
+        LoginCustomer.CustomeID = null;
+        List<Basket> allBaskets = basketService.findAll();
+        request.getSession().removeAttribute("selectedProducts");
+       // List<Products> prodList = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+        //prodList = new ArrayList<>();
+        /*for (Basket allBasket : allBaskets) 
         {
-            Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
-            productId = Long.parseLong(request.getParameter("productId"));
-            Products cartProduct = productService.findByProductID(productId);
-            cartProducts.add(cartProduct);
-            LOG.info("in doget : " + cartProducts.size());
-            Basket newBasket = new Basket(new Date(), 1, cartProduct.getPrice(), loggedInCustomer);
-            newBasket.addProducts(cartProduct);
-            basketService.create(newBasket);
-        }
-        request.setAttribute("allProducts", productService.findAll());
-        LOG.info("No Error in doGet");
-        request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
+            List<Products> basketProducts = allBasket.getProducts();
+            for (Products basketProduct : basketProducts)
+            {
+                productService.delete(basketProduct);
+            }
+            basketService.delete(allBasket);
+        }*/
+        //AddToCart.cartProducts = new ArrayList<>();
+       // LOG.info("In logout productList : "+ AddToCart.cartProducts.size() );
+        request.logout();
+        request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
     }
 
     /**
@@ -112,22 +121,23 @@ public class AddToCart extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        LOG.info("came to doPost");
-        LOG.info(basketService.findAll().toString());
-        request.setAttribute("basketProducts", basketService.findAll());
-        //request.setAttribute("selectedProducts", cartProducts);
-        HttpSession session = request.getSession();
-        int i = 0;
-        LOG.info("In dopost with i = " + i);
-        session.setAttribute("index", i);
-        LOG.info("in dopost : " + cartProducts.size());
-        session.setAttribute("selectedProducts", cartProducts);
-        for (Products cartProduct : cartProducts) 
+        Date shoppingDate = new Date();
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(shoppingDate);
+        cal.add(Calendar.DATE, 5);
+        Date deliveryDate = cal.getTime();
+        Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
+        int totalBillAmount = 0;
+        List<Basket> allBasket = basketService.findAll();
+        for (Basket basket : allBasket)
         {
-            LOG.info(cartProduct.toString());
+            totalBillAmount = totalBillAmount + basket.getPricePerUnit();
         }
-        LOG.info("*****************");
-        request.getRequestDispatcher("/WEB-INF/pages/CartProducts.jsp").forward(request, response);
+        Orders orders = new Orders(loggedInCustomer, totalBillAmount, deliveryDate);
+        orderService.create(orders);
+        LOG.info("Total bill amount is : " + totalBillAmount);
+        request.setAttribute("currentOrder", orders);
+        request.getRequestDispatcher("/WEB-INF/pages/Orders.jsp").forward(request, response);
     }
 
     /**

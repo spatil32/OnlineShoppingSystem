@@ -13,10 +13,12 @@
 <h1 style="color: crimson">All Cart Products!!</h1>
 
 <%
-    int i = 0;
+    int i = (Integer)session.getAttribute("index");
+    out.print("Page invoked at i = " + i);
     ArrayList<Products> cartProducts = (ArrayList<Products>)session.getAttribute("selectedProducts");
+    out.print("in jsp page size : " + cartProducts.size());
 %>
-<form method="POST" style="text-align: center" action="<c:url value="/removeFromCart"/>">
+<form method="POST" style="text-align: center" action="<c:url value="/confirmedOrder"/>">
 <table class="table">
     <thead>
         <tr class="info">
@@ -28,6 +30,9 @@
         </tr>
         </thead>
         <tbody>
+             <% i=0;
+              out.print("Start zalay : " + i);
+             %>
             <c:forEach items="${requestScope.basketProducts}" var="product">
                 <tr class="danger">
                     <td>${product.basketId}</td>
@@ -41,10 +46,16 @@
                 </tr>
                 <% i++; %>
         </c:forEach>
+             <% 
+              out.print("End zalay : " + i);
+             %>   
         <br/>            
         <br/>
     </tbody>
 </table>
 <input class="btn-danger" type="submit" value="Confirm Order" name="confirmOrder" id="confirmOrder"/>
 </form>
-<%@include file="/WEB-INF/jspf/footer.jspf" %>      
+<% i = 0; 
+out.print("Finish zala : " + i);
+%>
+<%@include file="/WEB-INF/jspf/footer.jspf" %>       

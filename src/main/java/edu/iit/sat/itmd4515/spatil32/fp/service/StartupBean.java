@@ -10,8 +10,10 @@ import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.security.Group;
 import edu.iit.sat.itmd4515.spatil32.fp.security.User;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -62,11 +64,15 @@ public class StartupBean
         
         
        //Without security code
+              
        Customer adminCustomer = new Customer("admin", "admin", 27, 'M', "Pune", "admin@admin.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "admin", "admin", 'Y');
        customerService.create(adminCustomer);
 
-       Customer newCustomer = new Customer("Shreyas", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "shreyas", "patil", 'N');
-       customerService.create(newCustomer);
+       Customer newCustomer1 = new Customer("Shreyas", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "shreyas", "patil", 'N');
+       customerService.create(newCustomer1);
+       
+       Customer newCustomer2 = new Customer("Revan", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "revan", "patil", 'N');
+       customerService.create(newCustomer2);
        
         Products newProduct1 = new Products("LED TV", new Date(), 'E', 5000, 10, 150, 120);
         Products newProduct2 = new Products("BOSE Speakers", new Date(), 'E', 800, 20, 50, 20);
