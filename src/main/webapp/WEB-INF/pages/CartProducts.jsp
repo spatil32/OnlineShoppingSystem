@@ -3,6 +3,7 @@
     Created on : Apr 26, 2016, 10:44:27 PM
     Author     : Dell
 --%>
+<%@page import="java.util.Iterator"%>
 <%@page import="edu.iit.sat.itmd4515.spatil32.fp.model.Products"%>
 <%@page import="java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,10 +14,8 @@
 <h1 style="color: crimson">All Cart Products!!</h1>
 
 <%
-    int i = (Integer)session.getAttribute("index");
-    out.print("Page invoked at i = " + i);
+    int i = 0;
     ArrayList<Products> cartProducts = (ArrayList<Products>)session.getAttribute("selectedProducts");
-    out.print("in jsp page size : " + cartProducts.size());
 %>
 <form method="POST" style="text-align: center" action="<c:url value="/confirmedOrder"/>">
 <table class="table">
@@ -30,14 +29,12 @@
         </tr>
         </thead>
         <tbody>
-             <% i=0;
-              out.print("Start zalay : " + i);
-             %>
+             <% i=0;%>
             <c:forEach items="${requestScope.basketProducts}" var="product">
                 <tr class="danger">
                     <td>${product.basketId}</td>
                     <td><% out.print(cartProducts.get(i).getProductName()); %></td>
-                    <td><% out.print(cartProducts.get(i).getMfgDate()); %></td>
+                    <td><% out.print(cartProducts.get(i).getMfgDate()); %></td> 
                     <td>${product.pricePerUnit}</td>
                     <td><% out.print(cartProducts.get(i).getDiscount()); %></td>
                     <td>
@@ -45,17 +42,19 @@
                     </td>
                 </tr>
                 <% i++; %>
-        </c:forEach>
-             <% 
-              out.print("End zalay : " + i);
-             %>   
+        </c:forEach>  
         <br/>            
         <br/>
     </tbody>
 </table>
 <input class="btn-danger" type="submit" value="Confirm Order" name="confirmOrder" id="confirmOrder"/>
 </form>
-<% i = 0; 
-out.print("Finish zala : " + i);
+<%  i = 0; 
+    //Iterator<Products> iterator = cartProducts.iterator();
+    //while(iterator.hasNext())
+    //{
+        //iterator.next();
+        //iterator.remove();
+    //}
 %>
 <%@include file="/WEB-INF/jspf/footer.jspf" %>       

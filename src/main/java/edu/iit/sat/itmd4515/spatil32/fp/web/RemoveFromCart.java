@@ -6,16 +6,21 @@
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
+import edu.iit.sat.itmd4515.spatil32.fp.model.BasketProducts;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.Basket_ProductsService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -41,6 +46,9 @@ public class RemoveFromCart extends HttpServlet
     
     @EJB
     OrderService orderService;
+    
+    @EJB
+    Basket_ProductsService basketProductSrvice;
     
     private static final Logger LOG = Logger.getLogger(RemoveFromCart.class.getName());
     
@@ -71,7 +79,6 @@ public class RemoveFromCart extends HttpServlet
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -89,10 +96,41 @@ public class RemoveFromCart extends HttpServlet
         {
             basketId = Long.parseLong(request.getParameter("basketId"));
             Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
-            Basket deleteBasket = basketService.findBasketByBasketId(basketId);
-            LOG.info("SIZE : " + deleteBasket.getProducts().size());
-            //basketService.delete(deleteBasket);
-            ////TO COMPLETE//////
+            //find productid from basketproduct
+            BasketProducts basketProduct = basketProductSrvice.findBasketProductByBasketId(basketId);
+            //delete from basketproduct
+            basketProductSrvice.deleteByBasketId(basketId);
+            //delete from basket
+            basketService.deleteBasketByBasketId(basketId);
+            //delete from arraylist
+            ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+            LOG.info("Atta size ahe  = " + cartProducts.size());
+            int productIdOfBasketProduct = basketProduct.getProductId();
+            LOG.info("Delete karaycha id ahe = " + Integer.toString(productIdOfBasketProduct));
+            for (Products cartProduct : cartProducts) {
+                LOG.info("Product id he ahet..");
+                LOG.info("***************");
+                LOG.info(cartProduct.toString());
+            }
+            Iterator<Products> iterator = cartProducts.iterator();
+            while(iterator.hasNext())
+            {
+                Products toDelete = iterator.next();
+                if(toDelete.getProductId() == productIdOfBasketProduct)
+                {
+                    iterator.remove();
+                    break;
+                }
+            }
+    /*        for (Products cartProduct : cartProducts) 
+            {
+                if(cartProduct.getProductId() == productIdOfBasketProduct)
+                    cartProducts.remove(cartProduct);
+                    
+            }*/
+            request.setAttribute("basketProducts", basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID));
+
+            request.getRequestDispatcher("/WEB-INF/pages/CartProducts.jsp").forward(request, response);
         }
     }
 

@@ -12,6 +12,7 @@
     <class>edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin</class>
     <class>edu.iit.sat.itmd4515.spatil32.fp.security.Group</class>
     <class>edu.iit.sat.itmd4515.spatil32.fp.security.User</class>
+    <class>edu.iit.sat.itmd4515.spatil32.fp.model.BasketProducts</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

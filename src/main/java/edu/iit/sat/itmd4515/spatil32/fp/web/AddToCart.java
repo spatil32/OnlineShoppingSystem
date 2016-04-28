@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -70,7 +71,6 @@ public class AddToCart extends HttpServlet
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -114,18 +114,27 @@ public class AddToCart extends HttpServlet
     {
         LOG.info("came to doPost");
         LOG.info(basketService.findAll().toString());
-        request.setAttribute("basketProducts", basketService.findAll());
-        //request.setAttribute("selectedProducts", cartProducts);
+        request.setAttribute("basketProducts", basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID));
+        
         HttpSession session = request.getSession();
-        int i = 0;
-        LOG.info("In dopost with i = " + i);
-        session.setAttribute("index", i);
+        
         LOG.info("in dopost : " + cartProducts.size());
         session.setAttribute("selectedProducts", cartProducts);
-        for (Products cartProduct : cartProducts) 
+        LOG.info("Printed in JSP");
+        List<Basket> b = basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID);
+        int i = 0;
+        for (Basket basket : b)
         {
-            LOG.info(cartProduct.toString());
+            LOG.info(Integer.toString(basket.getBasketId()));
+            
+            LOG.info(cartProducts.get(i).getProductName());
+            LOG.info(Integer.toString(cartProducts.get(i).getPrice()));
+            i++;
         }
+        
+        LOG.info("#############################");
+
+        
         LOG.info("*****************");
         request.getRequestDispatcher("/WEB-INF/pages/CartProducts.jsp").forward(request, response);
     }

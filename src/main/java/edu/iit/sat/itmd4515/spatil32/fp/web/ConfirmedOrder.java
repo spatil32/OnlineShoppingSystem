@@ -6,10 +6,12 @@
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
+import edu.iit.sat.itmd4515.spatil32.fp.model.BasketProducts;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.Basket_ProductsService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -48,6 +51,9 @@ public class ConfirmedOrder extends HttpServlet
     @EJB
     ProductService productService;
     
+    @EJB
+    Basket_ProductsService basketProductsService;
+    
     private static final Logger LOG = Logger.getLogger(ConfirmedOrder.class.getName());
 
     /**
@@ -76,7 +82,6 @@ public class ConfirmedOrder extends HttpServlet
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -89,22 +94,20 @@ public class ConfirmedOrder extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        LoginCustomer.CustomeID = null;
-        List<Basket> allBaskets = basketService.findAll();
-        request.getSession().removeAttribute("selectedProducts");
-       // List<Products> prodList = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
-        //prodList = new ArrayList<>();
-        /*for (Basket allBasket : allBaskets) 
+        ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+        Iterator<Products> iterator = cartProducts.iterator();
+        while(iterator.hasNext())
         {
-            List<Products> basketProducts = allBasket.getProducts();
-            for (Products basketProduct : basketProducts)
-            {
-                productService.delete(basketProduct);
-            }
-            basketService.delete(allBasket);
-        }*/
-        //AddToCart.cartProducts = new ArrayList<>();
-       // LOG.info("In logout productList : "+ AddToCart.cartProducts.size() );
+            iterator.next();
+            iterator.remove();
+        }
+        basketProductsService.removeAll();
+        List<Basket> allBaskets = basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID);
+        LOG.info("In logout size = " + allBaskets.size());
+        basketService.deleteBasketByCustomerId(LoginCustomer.CustomeID);
+        LOG.info("Deleted from Basket");
+        LoginCustomer.CustomeID = null;
+        request.getSession().removeAttribute("selectedProducts");
         request.logout();
         request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
     }
@@ -128,7 +131,7 @@ public class ConfirmedOrder extends HttpServlet
         Date deliveryDate = cal.getTime();
         Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
         int totalBillAmount = 0;
-        List<Basket> allBasket = basketService.findAll();
+        List<Basket> allBasket = basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID);
         for (Basket basket : allBasket)
         {
             totalBillAmount = totalBillAmount + basket.getPricePerUnit();

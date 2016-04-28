@@ -29,12 +29,14 @@ import javax.persistence.TemporalType;
  *
  * @author Dell
  */
-@Entity
+@Entity 
 @Table(name = "spatil32_Basket")
 @NamedQueries({
     @NamedQuery(name = "Basket.seeAllCustomersBaskets", query = "select b from Basket b"),
     @NamedQuery(name = "Basket.findBasketByCustomerId", query = "select b from Basket b where b.customer.customerId = :id"),
-    @NamedQuery(name = "Basket.findBasketByBasketId", query = "select b from Basket b where b.basketId = :id")
+    @NamedQuery(name = "Basket.findBasketByBasketId", query = "select b from Basket b where b.basketId = :id"),
+    @NamedQuery(name = "Basket.deleteBasketByCustomerId", query = "delete from Basket b where b.customer.customerId = :id"),
+    @NamedQuery(name = "Basket.deleteBasketByBasketId", query = "delete from Basket b where b.basketId = :id")
 })
 
 public class Basket {
@@ -58,8 +60,8 @@ public class Basket {
     @ManyToMany
     @JoinTable(
             name = "spatil32_basket_products",
-            joinColumns = @JoinColumn(name = "BASKET_ID"),
-            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID")
+            joinColumns = @JoinColumn(name = "BASKETID"),
+            inverseJoinColumns = @JoinColumn(name = "PRODUCTID")
     )
     private List<Products> products = new ArrayList<>();
 
