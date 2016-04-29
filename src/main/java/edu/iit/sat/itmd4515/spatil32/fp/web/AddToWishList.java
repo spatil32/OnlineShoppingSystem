@@ -5,10 +5,15 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
+import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Wishlist;
+import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.WishlistService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +25,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "NavigationServlet", urlPatterns = {"/navigationServlet"})
-public class NavigationServlet extends HttpServlet 
+@WebServlet(name = "AddToWishList", urlPatterns = {"/addToWishList"})
+public class AddToWishList extends HttpServlet
 {
     @EJB
+    CustomerService customerService; 
+    
+    @EJB
     ProductService productService;
+    
+    @EJB
+    WishlistService wishlistService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,10 +53,10 @@ public class NavigationServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NavigationServlet</title>");            
+            out.println("<title>Servlet AddToWishList</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NavigationServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddToWishList at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,15 +72,17 @@ public class NavigationServlet extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
+            throws ServletException, IOException
     {
         Long productId = null;
-        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
-            productId = Long.parseLong(WebUtil.trimParam(request.getParameter("productId")));
-        }
-        productService.deleteProductById(productId);
+        if(!WebUtil.isEmpty(request.getParameter("productId")))
+            productId = Long.parseLong(request.getParameter("productId"));
+        Products wishlistProduct = productService.findByProductID(productId);
+        Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
+        Wishlist newWishlist = new Wishlist(loggedInCustomer, wishlistProduct, new Date());
+        wishlistService.create(newWishlist);
         request.setAttribute("allProducts", productService.findAll());
-        request.getRequestDispatcher("/WEB-INF/pages/AllProducts.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
 
     /**
@@ -82,9 +95,8 @@ public class NavigationServlet extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

@@ -34,7 +34,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Products.seeAllProducts", query = "select p from Products p"),
     @NamedQuery(name = "Products.findProductById", query = "select p from Products p where p.productId = :id"),
     @NamedQuery(name = "Products.UpdateProductById", query = "update Products p SET p.productName = :name, p.mfgDate = :mfgDate,"
-            + "p.category = :category, p.price = :price, p.discount = :discount, p.totalQty = :total, p.availableQty = :available where p.productId = :id")
+            + "p.category = :category, p.price = :price, p.discount = :discount, p.totalQty = :total, p.availableQty = :available where p.productId = :id"),
+    @NamedQuery(name = "Products.DeleteProductById", query = "delete from Products p where p.productId = :id"),
 })
 
 public class Products 

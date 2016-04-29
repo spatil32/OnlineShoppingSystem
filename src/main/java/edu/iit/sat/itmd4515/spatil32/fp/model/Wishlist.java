@@ -27,7 +27,8 @@ import javax.persistence.TemporalType;
 @Table(name = "spatil32_Wishlist")
 @NamedQueries({
     @NamedQuery(name = "Wishlist.seeAllWishlists", query = "select w from Wishlist w"),
-    @NamedQuery(name = "Wishlist.seeWishlistsByCustomerId", query = "select w from Wishlist w where w.customer.customerId = :id")
+    @NamedQuery(name = "Wishlist.seeWishlistsByCustomerId", query = "select w from Wishlist w where w.customer.customerId = :id"),
+    @NamedQuery(name = "Wishlist.deleteWishlistsByProductId", query = "delete from Wishlist w where w.product.productId = :id")
 })
 public class Wishlist 
 {

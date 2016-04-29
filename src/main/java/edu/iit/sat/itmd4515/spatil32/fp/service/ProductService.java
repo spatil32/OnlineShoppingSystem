@@ -53,4 +53,12 @@ public class ProductService extends AbstractService<Products>
         int updated = query.executeUpdate();
         LOG.info("Product Updated...");        
     }
+    
+    public void deleteProductById(Long id)
+    {
+        TypedQuery<Products> query = em.createNamedQuery("Products.DeleteProductById",Products.class);
+        query.setParameter("id", id);
+        int deleted = query.executeUpdate();
+        LOG.info("Product deleted..");
+    }
 }

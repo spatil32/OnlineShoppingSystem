@@ -108,6 +108,7 @@ public class ConfirmedOrder extends HttpServlet
         LOG.info("Deleted from Basket");
         LoginCustomer.CustomeID = null;
         request.getSession().removeAttribute("selectedProducts");
+        request.getSession().removeAttribute("currentOrder");
         request.logout();
         request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
     }
@@ -137,6 +138,8 @@ public class ConfirmedOrder extends HttpServlet
             totalBillAmount = totalBillAmount + basket.getPricePerUnit();
         }
         Orders orders = new Orders(loggedInCustomer, totalBillAmount, deliveryDate);
+        HttpSession session = request.getSession();
+        session.setAttribute("currentOrder", orders);
         orderService.create(orders);
         LOG.info("Total bill amount is : " + totalBillAmount);
         request.setAttribute("currentOrder", orders);

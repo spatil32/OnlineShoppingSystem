@@ -5,7 +5,6 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "NavigationServlet", urlPatterns = {"/navigationServlet"})
-public class NavigationServlet extends HttpServlet 
+@WebServlet(name = "PageFlow", urlPatterns = {"/pageFlow"})
+public class PageFlow extends HttpServlet
 {
     @EJB
     ProductService productService;
@@ -42,10 +41,10 @@ public class NavigationServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NavigationServlet</title>");            
+            out.println("<title>Servlet PageFlow</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NavigationServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PageFlow at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,13 +62,8 @@ public class NavigationServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        Long productId = null;
-        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
-            productId = Long.parseLong(WebUtil.trimParam(request.getParameter("productId")));
-        }
-        productService.deleteProductById(productId);
         request.setAttribute("allProducts", productService.findAll());
-        request.getRequestDispatcher("/WEB-INF/pages/AllProducts.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
 
     /**
@@ -82,9 +76,8 @@ public class NavigationServlet extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

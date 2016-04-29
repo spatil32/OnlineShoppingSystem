@@ -5,10 +5,18 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
+import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
+import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.WishlistService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +28,22 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "NavigationServlet", urlPatterns = {"/navigationServlet"})
-public class NavigationServlet extends HttpServlet 
+@WebServlet(name = "AddToCartFromWishlist", urlPatterns = {"/addToCartFromWishlist"})
+public class AddToCartFromWishlist extends HttpServlet
 {
+
+    private static final Logger LOG = Logger.getLogger(AddToCartFromWishlist.class.getName());
+    @EJB
+    CustomerService customerService;
+    
     @EJB
     ProductService productService;
+
+    @EJB
+    BasketService basketService;
+    
+    @EJB
+    WishlistService wishlistService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,10 +61,10 @@ public class NavigationServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NavigationServlet</title>");            
+            out.println("<title>Servlet AddToCartFromWishlist</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NavigationServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddToCartFromWishlist at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,13 +82,22 @@ public class NavigationServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
         Long productId = null;
-        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
-            productId = Long.parseLong(WebUtil.trimParam(request.getParameter("productId")));
-        }
-        productService.deleteProductById(productId);
-        request.setAttribute("allProducts", productService.findAll());
-        request.getRequestDispatcher("/WEB-INF/pages/AllProducts.jsp").forward(request, response);
+        if(!WebUtil.isEmpty(request.getParameter("productId")))
+            productId = Long.parseLong(request.getParameter("productId"));
+        
+        Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
+        Products cartProduct = productService.findByProductID(productId);
+        cartProducts.add(cartProduct);
+        LOG.info("in doget : " + cartProducts.size());
+        Basket newBasket = new Basket(new Date(), 1, cartProduct.getPrice(), loggedInCustomer);
+        newBasket.addProducts(cartProduct);
+        basketService.create(newBasket);
+        wishlistService.deleteWishlistProductByProductId(productId);
+        request.setAttribute("basketProducts", basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID));
+        LOG.info("No Error in doGet");
+        request.getRequestDispatcher("/WEB-INF/pages/CartProducts.jsp").forward(request, response);
     }
 
     /**
@@ -82,9 +110,8 @@ public class NavigationServlet extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

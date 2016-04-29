@@ -37,6 +37,9 @@
                     <td>
                         <a href="<c:url value="${requestScope.servletPath}/addToCart"><c:param name="productId" value="${product.productId}"/></c:url>">Add To Cart</a>
                     </td>
+                    <td>
+                        <a href="<c:url value="${requestScope.servletPath}/addToWishList"><c:param name="productId" value="${product.productId}"/></c:url>">Add To Wishlist</a>
+                    </td>
                 </tr>
         </c:forEach>
         <br/>
