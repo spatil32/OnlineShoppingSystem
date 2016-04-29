@@ -5,13 +5,8 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
-import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
-import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,16 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "LoginCustomer", urlPatterns = {"/loginCustomer"})
-public class LoginCustomer extends HttpServlet 
-{
-    @EJB
-    CustomerService customerService;
-    
-    @EJB
-    ProductService productService;
-    public static Integer CustomeID = null;
-    private static final Logger LOG = Logger.getLogger(LoginCustomer.class.getName());
+@WebServlet(name = "NavigationServlet", urlPatterns = {"/navigationServlet"})
+public class NavigationServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,10 +37,10 @@ public class LoginCustomer extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginCustomer</title>");            
+            out.println("<title>Servlet NavigationServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginCustomer at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet NavigationServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,7 +58,7 @@ public class LoginCustomer extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+        
     }
 
     /**
@@ -85,28 +73,8 @@ public class LoginCustomer extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        Customer customer = new Customer(username, password);
-        try
-        {
-            Customer foundCustomer = customerService.findByUsernameAndPassword(username, password);
-            CustomeID = foundCustomer.getCustomerId();
-            if(foundCustomer.getIsAdmin() == 'Y')
-            {
-                request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
-            }
-            else
-            {
-                request.setAttribute("allProducts", productService.findAll());
-                request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
-            }
-        }
-        catch(Exception ex)
-        {
-            LOG.info("Not Found");
-            request.getRequestDispatcher("error.html").forward(request, response);
-        }    }
+        request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
+    }
 
     /**
      * Returns a short description of the servlet.

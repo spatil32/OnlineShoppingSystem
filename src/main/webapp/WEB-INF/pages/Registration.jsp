@@ -8,9 +8,9 @@
 <%@include file="/WEB-INF/jspf/header.jspf" %>
 <h1>New Customer Registration</h1>
 
-<c:if test="${not empty requestScope[newCustomer]}">
-    <h2>${requestScope.newCustomer.firstName}
-        ${requestScope.newCustomer.lastName}</h2>
+<c:if test="${not empty requestScope[customer]}">
+    <h2>${requestScope.customer.firstName}
+        ${requestScope.customer.lastName}</h2>
     </c:if>
 
 <c:if test="${not empty requestScope.violations}">

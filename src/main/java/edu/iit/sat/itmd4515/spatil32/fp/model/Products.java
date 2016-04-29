@@ -19,6 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Products POJO consist of all data fields to be persisted, constructors, getters, setters and toString() method.
@@ -29,7 +32,9 @@ import javax.persistence.TemporalType;
 @Table(name = "spatil32_Products")
 @NamedQueries({
     @NamedQuery(name = "Products.seeAllProducts", query = "select p from Products p"),
-    @NamedQuery(name = "Products.findProductById", query = "select p from Products p where p.productId = :id")
+    @NamedQuery(name = "Products.findProductById", query = "select p from Products p where p.productId = :id"),
+    @NamedQuery(name = "Products.UpdateProductById", query = "update Products p SET p.productName = :name, p.mfgDate = :mfgDate,"
+            + "p.category = :category, p.price = :price, p.discount = :discount, p.totalQty = :total, p.availableQty = :available where p.productId = :id")
 })
 
 public class Products 
@@ -38,6 +43,8 @@ public class Products
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
+    @NotNull(message = "Product name cannot be null.")
+    @Size(max = 45)
     private String productName;
     @Temporal(TemporalType.DATE)
     private Date mfgDate;

@@ -65,7 +65,11 @@ public class Customer
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
     private String phoneNo;
+    @NotNull(message = "Username cannot be null.")
+    @Size(max = 45)
     private String username;
+    @NotNull(message = "Password cannot be null.")
+    @Size(max = 45)
     private String password;
     private char isAdmin;
     

@@ -5,8 +5,8 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
-import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
+import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
+import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -27,16 +27,17 @@ import javax.validation.Validator;
  *
  * @author Dell
  */
-@WebServlet(name = "NewCustomer", urlPatterns = {"/newCustomer"})
-public class NewCustomer extends HttpServlet
+@WebServlet(name = "NewProduct", urlPatterns = {"/newProduct"})
+public class NewProduct extends HttpServlet 
 {
 
-    private static final Logger LOG = Logger.getLogger(NewCustomer.class.getName());
+    private static final Logger LOG = Logger.getLogger(NewProduct.class.getName());
     @EJB
-    CustomerService customerService;
-
+    ProductService productService;
+    
     @Resource
     Validator validator;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,10 +55,10 @@ public class NewCustomer extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewCustomer</title>");            
+            out.println("<title>Servlet NewProduct</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewCustomer at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet NewProduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,7 +76,7 @@ public class NewCustomer extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        request.getRequestDispatcher("/WEB-INF/pages/Registration.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/NewProduct.jsp").forward(request, response);
     }
 
     /**
@@ -88,44 +89,41 @@ public class NewCustomer extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
+            throws ServletException, IOException
     {
-        String firstName = WebUtil.trimParam(request.getParameter("firstName"));
-        String lastName = WebUtil.trimParam(request.getParameter("lastName"));
-        Integer age = Integer.parseInt(WebUtil.trimParam(request.getParameter("age")));
-        String gender = WebUtil.trimParam(request.getParameter("gender"));
-        String address = WebUtil.trimParam(request.getParameter("address"));
-        String email = WebUtil.trimParam(request.getParameter("email"));
-        String birthDate = WebUtil.trimParam(request.getParameter("birthDate"));
-        String[] birth = birthDate.split("-");
-        int birthDay = Integer.parseInt(birth[2]);
-        int birthMonth = Integer.parseInt(birth[1]);
-        int birthYear = Integer.parseInt(birth[0]);
-        Date birthdate = new GregorianCalendar(birthYear,birthMonth ,birthDay).getTime();
-        String phoneNo = WebUtil.trimParam(request.getParameter("phoneNo"));
-        String username = WebUtil.trimParam(request.getParameter("username"));
-        String password = WebUtil.trimParam(request.getParameter("password"));
+        String productName = WebUtil.trimParam(request.getParameter("productName"));
+        String mfgDate = WebUtil.trimParam(request.getParameter("mfgDate"));
+        String[] date = mfgDate.split("-");
+        int mfgDay = Integer.parseInt(date[2]);
+        int mfgMonth = Integer.parseInt(date[1]);
+        int mfgYear = Integer.parseInt(date[0]);
+        Date mfgdate = new GregorianCalendar(mfgYear,mfgMonth ,mfgDay).getTime();
+        String category = WebUtil.trimParam(request.getParameter("category"));
+        Integer price = Integer.parseInt(WebUtil.trimParam(request.getParameter("price")));
+        Integer discount = Integer.parseInt(WebUtil.trimParam(request.getParameter("discount")));
+        Integer totalQty = Integer.parseInt(WebUtil.trimParam(request.getParameter("totalQty")));
+        Integer availableQty = Integer.parseInt(WebUtil.trimParam(request.getParameter("availableQty")));
         
-        Customer newCustomer = new Customer(firstName, lastName, age, gender.charAt(0), address, email, birthdate, phoneNo, username, password);
-        Set<ConstraintViolation<Customer>> violations = validator.validate(newCustomer);
+        Products newProduct = new Products(productName, mfgdate, category.charAt(0), price, discount, totalQty, availableQty);
+        Set<ConstraintViolation<Products>> violations = validator.validate(newProduct);
         
         if(violations.isEmpty())
         {
-            customerService.create(newCustomer);
-            request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+            productService.create(newProduct);
+            request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
         }
         else
         {
-            LOG.info("There are " + violations.size() + " violations in registration form as below : \n");
-            for (ConstraintViolation<Customer> violation : violations) 
+            LOG.info("There are " + violations.size() + " violations in new product form as below : \n");
+            for (ConstraintViolation<Products> violation : violations) 
             {
                 LOG.info("#####" + violation.getRootBeanClass().getSimpleName()
                         + "." + violation.getPropertyPath() + " failed violation:\t"
                         + violation.getInvalidValue() + " failed with message " + violation.getMessage());
             }
             request.setAttribute("violations", violations);
-            request.setAttribute("customer", newCustomer);
-            request.getRequestDispatcher("WEB-INF/pages/Registration.jsp").forward(request, response);
+            request.setAttribute("products", newProduct);
+            request.getRequestDispatcher("WEB-INF/pages/NewProduct.jsp").forward(request, response);
         }
     }
 
@@ -137,6 +135,6 @@ public class NewCustomer extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
