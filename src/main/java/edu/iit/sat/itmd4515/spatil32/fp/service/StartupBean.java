@@ -57,24 +57,21 @@ public class StartupBean
         em.persist(SystemCustomer);
         
         User admin = new User("admin", "admin");
-        admin.addUserToGroup(SystemAdmin);
-        em.persist(admin);
-        
-        Admin admins = new Admin();
-        admins.setUser(admin);
-        
-        adminService.create(admins);
-        System.out.println("Added admin");
-        
         User cust = new User("shreyas", "patil");
+
+        admin.addUserToGroup(SystemAdmin);
         cust.addUserToGroup(SystemCustomer);
+        
+        em.persist(admin);
         em.persist(cust);
         
-        CustomersLogin customers = new CustomersLogin();
-        customers.setUser(cust);
+        CustomersLogin cust1 = new CustomersLogin();
+        cust1.setUser(cust);
+        Admin admin1 = new Admin();
+        admin1.setUser(admin);
         
-        customersServiceLogin.create(customers);
-        System.out.println("Added customer");
+        customersServiceLogin.create(cust1);
+        adminService.create(admin1);
        //Without security code
               
        Customer adminCustomer = new Customer("admin", "admin", 27, 'M', "Pune", "admin@admin.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "admin", "admin", 'Y');

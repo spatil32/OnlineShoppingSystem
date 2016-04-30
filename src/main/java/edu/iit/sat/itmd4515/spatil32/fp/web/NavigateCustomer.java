@@ -31,8 +31,6 @@ public class NavigateCustomer extends HttpServlet
     @EJB
     CustomerServiceLogin customerLoginService;
     
-    @EJB
-    CustomerService customerService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,7 +55,7 @@ public class NavigateCustomer extends HttpServlet
             if(request.isUserInRole("CUSTOMER"))
             {
                 LOG.info("Customer role madhe ahe");
-                CustomersLogin cust = customerService.findByUsername(request.getRemoteUser());
+                CustomersLogin cust = customerLoginService.findByUsername(request.getRemoteUser());
                 String username = cust.getUser().getUserName();
                 out.println("<h1>Welcome Employee: " + username + "</hl>");                
             }

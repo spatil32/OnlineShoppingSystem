@@ -19,4 +19,14 @@
     <button class="btn-lg" type="submit" value="Submit">Edit Products</button>
     <label><b>This button lets admin update or delete products.</b></label>    
 </form>
+    
+<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/adminFunctionalities"/>">
+    <button class="btn-lg" type="submit" value="Submit">See All Feedbacks</button>
+    <label><b>This button lets admin view all customers feedback.</b></label>    
+</form>
+    
+<form method="POST" style="text-align: center" action="<c:url value="${requestScope.servletPath}/adminFunctionalities"/>">
+    <button class="btn-lg" type="submit" value="Submit">View All Customers Orders</button>
+    <label><b>This button lets admin see all customers orders.</b></label>    
+</form>
 <br/><br/>

@@ -5,15 +5,10 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Admin;
-import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
-import edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin;
-import edu.iit.sat.itmd4515.spatil32.fp.service.AdminService;
-import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
-import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerServiceLogin;
+import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,16 +20,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
-public class AdminServlet extends HttpServlet
+@WebServlet(name = "PreviousOrders", urlPatterns = {"/previousOrders"})
+public class PreviousOrders extends HttpServlet
 {
-
-    private static final Logger LOG = Logger.getLogger(AdminServlet.class.getName());
     @EJB
-    CustomerServiceLogin customerServiceLogin;
+    OrderService orderService;
     
     @EJB
-    AdminService adminService;
+    ProductService productService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,26 +45,10 @@ public class AdminServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminServlet</title>");            
+            out.println("<title>Servlet PreviousOrders</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            LOG.info("servlet madhe ala");
-            if(request.isUserInRole("ADMIN"))
-            {
-                LOG.info("admin role madhe ahe");
-                Admin admin = adminService.findByUsername(request.getRemoteUser());
-                String username = admin.getUser().getUserName();
-                out.println("<h1>Welcome Employee: " + username + "</hl>");
-            }
-            else if(request.isUserInRole("CUSTOMER"))
-            {
-                LOG.info("Customer role madhe ahe");
-                CustomersLogin cust = customerServiceLogin.findByUsername(request.getRemoteUser());
-                String username = cust.getUser().getUserName();
-                out.println("<h1>Welcome Employee: " + username + "</hl>");
-            }
-            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PreviousOrders at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -89,7 +66,8 @@ public class AdminServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-         processRequest(request, response);
+        request.setAttribute("allOrders",orderService.findOrdersByCustomerId(LoginCustomer.CustomeID));
+        request.getRequestDispatcher("/WEB-INF/pages/PreviousOrders.jsp").forward(request, response);
     }
 
     /**
@@ -102,8 +80,10 @@ public class AdminServlet extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException 
+    {
+        request.setAttribute("allProducts", productService.findAll());
+        request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
 
     /**
