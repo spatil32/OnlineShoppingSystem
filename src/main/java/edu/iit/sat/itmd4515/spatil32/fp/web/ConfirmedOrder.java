@@ -94,6 +94,11 @@ public class ConfirmedOrder extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        
+        //JMS
+        
+        
+        //End of JMS
         ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
         Iterator<Products> iterator = cartProducts.iterator();
         while(iterator.hasNext())

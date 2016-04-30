@@ -6,6 +6,7 @@
 package edu.iit.sat.itmd4515.spatil32.fp.service;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
+import edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin;
 import edu.iit.sat.itmd4515.spatil32.fp.web.LoginCustomer;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -49,6 +50,12 @@ public class CustomerService extends AbstractService<Customer>
     {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerById", Customer.class);
         query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+    
+    public CustomersLogin findByUsername(String username) {
+        TypedQuery<CustomersLogin> query = em.createNamedQuery("CustomersLogin.findByUsername", CustomersLogin.class);
+        query.setParameter("username", username);
         return query.getSingleResult();
     }
 }

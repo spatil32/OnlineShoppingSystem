@@ -8,6 +8,7 @@ package edu.iit.sat.itmd4515.spatil32.fp.web;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerServiceLogin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -22,11 +23,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
-public class AdminServlet extends HttpServlet
+@WebServlet(name = "NavigateCustomer", urlPatterns = {"/customer"})
+public class NavigateCustomer extends HttpServlet 
 {
 
-    private static final Logger LOG = Logger.getLogger(AdminServlet.class.getName());
+    private static final Logger LOG = Logger.getLogger(NavigateCustomer.class.getName());
+    @EJB
+    CustomerServiceLogin customerLoginService;
+    
     @EJB
     CustomerService customerService;
     /**
@@ -46,26 +50,19 @@ public class AdminServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminServlet</title>");            
+            out.println("<title>Servlet NavigateCustomer</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            LOG.info("servlet madhe ala");
-            if(request.isUserInRole("ADMIN"))
-            {
-                LOG.info("admin role madhe ahe");
-                Customer admin = customerService.findByCustomerName(request.getRemoteUser());
-                String username = admin.getUsername();
-                out.println("<h1>Welcome Employee: " + username + "</hl>");
-            }
-            else if(request.isUserInRole("CUSTOMER"))
+            LOG.info("customer servlet madhe ala");
+            if(request.isUserInRole("CUSTOMER"))
             {
                 LOG.info("Customer role madhe ahe");
                 CustomersLogin cust = customerService.findByUsername(request.getRemoteUser());
                 String username = cust.getUser().getUserName();
-                out.println("<h1>Welcome Employee: " + username + "</hl>");
+                out.println("<h1>Welcome Employee: " + username + "</hl>");                
             }
-            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
+                
+            out.println("<h1>Servlet NavigateCustomer at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

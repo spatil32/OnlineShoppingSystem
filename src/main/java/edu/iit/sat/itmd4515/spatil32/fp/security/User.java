@@ -56,13 +56,13 @@ public class User {
     /**
      * Used to apply Hash code algorithm for password of User
      */
-    @PrePersist
+    /*@PrePersist
     @PreUpdate
     private void hashPassword() {
         String digestPassword = DigestUtils.sha256Hex(this.password);
         this.password = digestPassword;
     }
-
+*/
     /**
      * Used to User to a respective Group
      *

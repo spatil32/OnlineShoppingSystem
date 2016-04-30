@@ -7,6 +7,7 @@ package edu.iit.sat.itmd4515.spatil32.fp.service;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Admin;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
+import edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.security.Group;
 import edu.iit.sat.itmd4515.spatil32.fp.security.User;
@@ -36,6 +37,9 @@ public class StartupBean
     CustomerService customerService;
 
     @EJB
+    CustomerServiceLogin customersServiceLogin;
+    
+    @EJB
     AdminService adminService;
     
     @EJB
@@ -62,7 +66,15 @@ public class StartupBean
         adminService.create(admins);
         System.out.println("Added admin");
         
+        User cust = new User("shreyas", "patil");
+        cust.addUserToGroup(SystemCustomer);
+        em.persist(cust);
         
+        CustomersLogin customers = new CustomersLogin();
+        customers.setUser(cust);
+        
+        customersServiceLogin.create(customers);
+        System.out.println("Added customer");
        //Without security code
               
        Customer adminCustomer = new Customer("admin", "admin", 27, 'M', "Pune", "admin@admin.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "admin", "admin", 'Y');
