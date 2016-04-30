@@ -35,7 +35,10 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Customer.seeAllCustomers", query = "select c from Customer c"),
     @NamedQuery(name = "Customer.findCustomerByName", query = "select c from Customer c where c.firstName = :name"),
     @NamedQuery(name = "Customer.loginCustomer", query = "select c from Customer c where c.username = :username and c.password = :password"),
-    @NamedQuery(name = "Customer.findCustomerById", query = "select c from Customer c where c.customerId = :id")
+    @NamedQuery(name = "Customer.findCustomerById", query = "select c from Customer c where c.customerId = :id"),
+    @NamedQuery(name = "Customer.updateCustomerById", query = "update Customer c set c.firstName = :fname, c.lastName = :lname, "
+            + "c.age = :age, c.gender = :gender, c.address = :address, c.email = :email, c.birthDate = :birth, c.phoneNo = :phone where c.customerId = :id"),
+    @NamedQuery(name = "Customer.DeleteCustomerById", query = "delete from Customer c where c.customerId = :id")
 })
 public class Customer 
 {
@@ -207,6 +210,21 @@ public class Customer
         this.password = password;
         this.isAdmin = 'N';
     }
+
+    public Customer(int customerId, String firstName, String lastName, int age, char gender, String address, String email, Date birthDate, String phoneNo, String username, String password) {
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.address = address;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.phoneNo = phoneNo;
+        this.username = username;
+        this.password = password;
+    }
+
 
     /**
      * Get the value of customerId

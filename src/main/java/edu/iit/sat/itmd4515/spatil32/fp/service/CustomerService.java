@@ -7,6 +7,7 @@ package edu.iit.sat.itmd4515.spatil32.fp.service;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 
@@ -17,6 +18,8 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class CustomerService extends AbstractService<Customer>
 {
+
+    private static final Logger LOG = Logger.getLogger(CustomerService.class.getName());
 
     public CustomerService()
     {
@@ -49,5 +52,30 @@ public class CustomerService extends AbstractService<Customer>
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerById", Customer.class);
         query.setParameter("id", id);
         return query.getSingleResult();
+    }
+    
+    public void UpdateCustomer(Customer updateCustomer)
+    {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.updateCustomerById", Customer.class);
+        query.setParameter("fname", updateCustomer.getFirstName());
+        query.setParameter("lname", updateCustomer.getLastName());
+        query.setParameter("age", updateCustomer.getAge());
+        query.setParameter("gender", updateCustomer.getGender());
+        query.setParameter("address", updateCustomer.getAddress());
+        query.setParameter("email", updateCustomer.getEmail());
+        query.setParameter("birth", updateCustomer.getBirthDate());
+        query.setParameter("phone", updateCustomer.getPhoneNo());
+        query.setParameter("id", updateCustomer.getCustomerId());
+        
+        int updated = query.executeUpdate();
+        LOG.info("Account updated.");        
+    }
+    
+    public void deleteCustomerById(Integer id)
+    {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.DeleteCustomerById", Customer.class);
+        query.setParameter("id", id);
+        int deleted = query.executeUpdate();
+        LOG.info("Account deleted.");     
     }
 }

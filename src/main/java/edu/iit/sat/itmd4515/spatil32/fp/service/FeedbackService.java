@@ -8,6 +8,7 @@ package edu.iit.sat.itmd4515.spatil32.fp.service;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Feedback;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -25,5 +26,12 @@ public class FeedbackService extends AbstractService<Feedback>
     public List<Feedback> findAll() 
     {
         return em.createNamedQuery("Feedback.seeAllFeedbacks").getResultList();
+    }
+    
+    public void deleteFeedbackByCustomerId(Integer id)
+    {
+        TypedQuery<Feedback> query = em.createNamedQuery("Feedback.DeleteFeedbackByCustomerId", Feedback.class);
+        query.setParameter("id", id);
+        int deleted = query.executeUpdate();
     }
 }

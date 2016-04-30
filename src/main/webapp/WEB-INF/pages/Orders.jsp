@@ -36,4 +36,8 @@
  <br/><br/>
     <input class="btn-danger" type="submit" value="Logout" name="Logout" id="Logout"/>
 </form>
+    
+<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/updateAccount"/>">
+    <button class="btn-lg" type="submit" value="Edit Account">Edit Account</button>
+</form>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

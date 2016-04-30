@@ -27,7 +27,8 @@ import javax.persistence.TemporalType;
 @Table(name = "spatil32_Feedback")
 @NamedQueries({
     @NamedQuery(name = "Feedback.seeAllFeedbacks", query = "select f from Feedback f"),
-    @NamedQuery(name = "Feedback.findFeedbackById", query = "select f from Feedback f where f.feedbackId = :id")
+    @NamedQuery(name = "Feedback.findFeedbackById", query = "select f from Feedback f where f.feedbackId = :id"),
+    @NamedQuery(name = "Feedback.DeleteFeedbackByCustomerId", query = "delete from Feedback f where f.customer.customerId = :id")
 })
 
 public class Feedback 

@@ -35,4 +35,11 @@ public class OrderService extends AbstractService<Orders>
         query.setParameter("id", id);
         return query.getResultList();
     }
+    
+    public void deleteOrdersByCustomerId(Integer id)
+    {
+        TypedQuery<Orders> query = em.createNamedQuery("Orders.DeleteOrdersByCustomerId", Orders.class);
+        query.setParameter("id", id);
+        int deleted = query.executeUpdate();
+    }
 }

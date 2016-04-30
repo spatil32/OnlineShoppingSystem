@@ -28,7 +28,8 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Wishlist.seeAllWishlists", query = "select w from Wishlist w"),
     @NamedQuery(name = "Wishlist.seeWishlistsByCustomerId", query = "select w from Wishlist w where w.customer.customerId = :id"),
-    @NamedQuery(name = "Wishlist.deleteWishlistsByProductId", query = "delete from Wishlist w where w.product.productId = :id")
+    @NamedQuery(name = "Wishlist.deleteWishlistsByProductId", query = "delete from Wishlist w where w.product.productId = :id"),
+    @NamedQuery(name = "Wishlist.deleteWishlistsByCustomerId", query = "delete from Wishlist w where w.customer.customerId = :id")
 })
 public class Wishlist 
 {
