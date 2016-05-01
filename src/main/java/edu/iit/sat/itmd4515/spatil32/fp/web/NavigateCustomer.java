@@ -9,6 +9,8 @@ import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerServiceLogin;
+import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
+import static edu.iit.sat.itmd4515.spatil32.fp.web.LoginCustomer.CustomeID;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -31,6 +33,11 @@ public class NavigateCustomer extends HttpServlet
     @EJB
     CustomerServiceLogin customerLoginService;
     
+    @EJB
+    ProductService productService;
+    
+    @EJB
+    CustomerService customerService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,7 +64,11 @@ public class NavigateCustomer extends HttpServlet
                 LOG.info("Customer role madhe ahe");
                 CustomersLogin cust = customerLoginService.findByUsername(request.getRemoteUser());
                 String username = cust.getUser().getUserName();
-                out.println("<h1>Welcome Employee: " + username + "</hl>");                
+                Customer loggedInCustomer = customerService.findCustomerByUsername(username);
+                CustomeID = loggedInCustomer.getCustomerId();
+                out.println("<h1>Welcome Employee: " + username + "</hl>");
+                request.setAttribute("allProducts", productService.findAll());
+                request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);                
             }
                 
             out.println("<h1>Servlet NavigateCustomer at " + request.getContextPath() + "</h1>");

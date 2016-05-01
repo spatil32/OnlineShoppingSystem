@@ -29,4 +29,7 @@
     <button class="btn-lg" type="submit" value="Submit">View All Customers Orders</button>
     <label><b>This button lets admin see all customers orders.</b></label>    
 </form>
+
+<a href="<c:url value="${requestScope.servletPath}/confirmedOrder"></c:url>">Logout</a>
+    
 <br/><br/>

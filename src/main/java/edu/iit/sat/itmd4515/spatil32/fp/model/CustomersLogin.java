@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 /**
  * Customers login information domain class
  *
- * @author dwadekar
+ * @author Dell
  */
 @Entity
 @NamedQueries({

@@ -11,6 +11,7 @@ import edu.iit.sat.itmd4515.spatil32.fp.model.CustomersLogin;
 import edu.iit.sat.itmd4515.spatil32.fp.service.AdminService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerServiceLogin;
+import static edu.iit.sat.itmd4515.spatil32.fp.web.LoginCustomer.CustomeID;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -35,6 +36,9 @@ public class AdminServlet extends HttpServlet
     
     @EJB
     AdminService adminService;
+    
+    @EJB
+    CustomerService customerService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,8 +67,11 @@ public class AdminServlet extends HttpServlet
                 Admin admin = adminService.findByUsername(request.getRemoteUser());
                 String username = admin.getUser().getUserName();
                 out.println("<h1>Welcome Employee: " + username + "</hl>");
+                Customer loggedInCustomer = customerService.findCustomerByUsername(username);
+                CustomeID = loggedInCustomer.getCustomerId();
+                request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
             }
-            else if(request.isUserInRole("CUSTOMER"))
+            else
             {
                 LOG.info("Customer role madhe ahe");
                 CustomersLogin cust = customerServiceLogin.findByUsername(request.getRemoteUser());

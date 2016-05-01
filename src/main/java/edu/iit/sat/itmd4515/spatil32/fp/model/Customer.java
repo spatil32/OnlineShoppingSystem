@@ -36,6 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Customer.findCustomerByName", query = "select c from Customer c where c.firstName = :name"),
     @NamedQuery(name = "Customer.loginCustomer", query = "select c from Customer c where c.username = :username and c.password = :password"),
     @NamedQuery(name = "Customer.findCustomerById", query = "select c from Customer c where c.customerId = :id"),
+    @NamedQuery(name = "Customer.findCustomerByUsername", query = "select c from Customer c where c.username = :username"),
     @NamedQuery(name = "Customer.updateCustomerById", query = "update Customer c set c.firstName = :fname, c.lastName = :lname, "
             + "c.age = :age, c.gender = :gender, c.address = :address, c.email = :email, c.birthDate = :birth, c.phoneNo = :phone where c.customerId = :id"),
     @NamedQuery(name = "Customer.DeleteCustomerById", query = "delete from Customer c where c.customerId = :id")

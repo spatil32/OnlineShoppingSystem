@@ -46,7 +46,14 @@ public class CustomerService extends AbstractService<Customer>
         query.setParameter("password", password);
         return query.getSingleResult();
     }
-    
+
+        public Customer findCustomerByUsername(String username)
+    {
+        TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerByUsername", Customer.class);
+        query.setParameter("username", username);
+        return query.getSingleResult();
+    }
+        
     public Customer findByCustomerId(Integer id)
     {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerById", Customer.class);

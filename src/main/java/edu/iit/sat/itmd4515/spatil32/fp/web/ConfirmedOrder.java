@@ -99,23 +99,32 @@ public class ConfirmedOrder extends HttpServlet
         
         
         //End of JMS
-        ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
-        Iterator<Products> iterator = cartProducts.iterator();
-        while(iterator.hasNext())
+        if(request.isUserInRole("ADMIN"))
         {
-            iterator.next();
-            iterator.remove();
+            request.logout();
+            request.getRequestDispatcher("login.html").forward(request, response);
         }
-        basketProductsService.removeAll();
-        List<Basket> allBaskets = basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID);
-        LOG.info("In logout size = " + allBaskets.size());
-        basketService.deleteBasketByCustomerId(LoginCustomer.CustomeID);
-        LOG.info("Deleted from Basket");
-        LoginCustomer.CustomeID = null;
-        request.getSession().removeAttribute("selectedProducts");
-        request.getSession().removeAttribute("currentOrder");
-        request.logout();
-        request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+        else
+        {
+            ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+            Iterator<Products> iterator = cartProducts.iterator();
+            while(iterator.hasNext())
+            {
+                iterator.next();
+                iterator.remove();
+            }
+            basketProductsService.removeAll();
+            List<Basket> allBaskets = basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID);
+            LOG.info("In logout size = " + allBaskets.size());
+            basketService.deleteBasketByCustomerId(LoginCustomer.CustomeID);
+            LOG.info("Deleted from Basket");
+            LoginCustomer.CustomeID = null;
+            request.getSession().removeAttribute("selectedProducts");
+            request.getSession().removeAttribute("currentOrder");
+            request.logout();
+            //request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("login.html").forward(request, response);
+        }
     }
 
     /**

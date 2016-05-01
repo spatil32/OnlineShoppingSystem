@@ -82,11 +82,10 @@ public class StartupBean
        
        Customer newCustomer2 = new Customer("Revan", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "revan", "patil", 'N');
        customerService.create(newCustomer2);
-       
+    
         Products newProduct1 = new Products("LED TV", new Date(), 'E', 5000, 10, 150, 120);
         Products newProduct2 = new Products("BOSE Speakers", new Date(), 'E', 800, 20, 50, 20);
         productService.create(newProduct1);
         productService.create(newProduct2);
-
     }
 }
