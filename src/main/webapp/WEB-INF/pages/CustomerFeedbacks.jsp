@@ -10,8 +10,11 @@
 <%@include file="/WEB-INF/jspf/header.jspf" %>
 <h1 style="color: crimson">All Feedbacks!!</h1>
 
+<div class="pricing-table">
+    <div class="panel panel-primary" style="border: none;">
+        <div class="panel-body panel-body-landing">
 
-<form method="POST" style="text-align: center" action="<c:url value="${requestScope.servletPath}/navigationServlet"/>">
+<form method="POST" style="text-align: center" action="<c:url value="${requestScope.servletPath}/admin/navigationServlet"/>">
 <table class="table">
         <thead>
             <tr class="info">
@@ -37,4 +40,5 @@
 </table>
 <button class="btn-lg" type="submit" value="Go Back">Go Back</button>
 </form>
+        </div></div></div>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

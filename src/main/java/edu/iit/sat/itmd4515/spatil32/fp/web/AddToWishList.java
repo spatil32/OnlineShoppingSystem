@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AddToWishList", urlPatterns = {"/addToWishList"})
+@WebServlet(name = "AddToWishList", urlPatterns = {"/customer/addToWishList"})
 public class AddToWishList extends HttpServlet
 {
     @EJB
@@ -107,6 +107,6 @@ public class AddToWishList extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

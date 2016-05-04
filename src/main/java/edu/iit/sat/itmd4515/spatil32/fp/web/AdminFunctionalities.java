@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AdminFunctionalities", urlPatterns = {"/adminFunctionalities"})
+@WebServlet(name = "AdminFunctionalities", urlPatterns = {"/admin/adminFunctionalities"})
 public class AdminFunctionalities extends HttpServlet
 {
     @EJB

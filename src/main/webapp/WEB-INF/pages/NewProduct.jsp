@@ -20,7 +20,7 @@
     </ul>
 </c:if>
     
-<form method="POST" style="text-align: center" action="<c:url value="/newProduct"/>">
+<form method="POST" style="text-align: center" action="<c:url value="/admin/newProduct"/>">
     <div>
         <label for="productName">Enter Product Name&nbsp;&nbsp;</label>
         <input required class="form-horizontal" type="text" name="productName" id="productName" value="${products.productName}"/>

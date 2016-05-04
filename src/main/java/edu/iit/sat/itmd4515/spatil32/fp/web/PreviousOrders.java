@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "PreviousOrders", urlPatterns = {"/previousOrders"})
+@WebServlet(name = "PreviousOrders", urlPatterns = {"/customer/previousOrders"})
 public class PreviousOrders extends HttpServlet
 {
     @EJB

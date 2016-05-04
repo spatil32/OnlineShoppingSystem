@@ -8,13 +8,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jspf/header.jspf" %>
 
+<div class="container">
+    <h3>Your order is placed.</h3>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+      100%
+    </div>
+  </div>
+</div>
+
 <h1 style="color: crimson">Order Confirmation</h1>
-<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/insertFeedback"/>">
+<div class="pricing-table">
+    <div class="panel panel-primary" style="border: none;">
+        <div class="panel-body panel-body-landing">
+            <table class="table">
+                <td>
+<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/customer/insertFeedback"/>">
         <button class="btn-lg" type="submit" value="Submit">Provide Feedback</button>
 </form>           
-<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/allWishlists"/>">
+        </td>
+        <td>
+<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/customer/allWishlists"/>">
         <button class="btn-lg" type="submit" value="Submit">Go To Wishlists</button>
-</form>           
+</form>     
+        </td>
+            </table>
 <form method="GET" style="text-align: center" action="<c:url value="/confirmedOrder"/>">
     <%
         Orders currentOrder = (Orders)session.getAttribute("currentOrder");
@@ -36,8 +54,14 @@
  <br/><br/>
     <input class="btn-danger" type="submit" value="Logout" name="Logout" id="Logout"/>
 </form>
-    
-<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/updateAccount"/>">
+ 
+    </div></div></div>
+ <table class="table">
+     <td>
+         
+<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/customer/updateAccount"/>">
     <button class="btn-lg" type="submit" value="Edit Account">Edit Account</button>
 </form>
+     </td>
+</table>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

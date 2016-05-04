@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "DeleteAccount", urlPatterns = {"/deleteAccount"})
+@WebServlet(name = "DeleteAccount", urlPatterns = {"/customer/deleteAccount"})
 public class DeleteAccount extends HttpServlet
 {
     @EJB

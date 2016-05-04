@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "RemoveFromWishList", urlPatterns = {"/removeFromWishList"})
+@WebServlet(name = "RemoveFromWishList", urlPatterns = {"/customer/removeFromWishList"})
 public class RemoveFromWishList extends HttpServlet 
 {
     @EJB

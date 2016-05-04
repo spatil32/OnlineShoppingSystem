@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author patils03
  */
-@WebServlet(name = "RemoveFromCart", urlPatterns = {"/removeFromCart"})
+@WebServlet(name = "RemoveFromCart", urlPatterns = {"/customer/removeFromCart"})
 public class RemoveFromCart extends HttpServlet 
 {
     @EJB

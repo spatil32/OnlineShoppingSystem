@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "InsertFeedback", urlPatterns = {"/insertFeedback"})
+@WebServlet(name = "InsertFeedback", urlPatterns = {"/customer/insertFeedback"})
 public class InsertFeedback extends HttpServlet
 {
     @EJB

@@ -7,7 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jspf/header.jspf" %>
 
-<a href="<c:url value="${requestScope.servletPath}/pageFlow"></c:url>">Go Back</a>
+<div class="pricing-table">
+    <div class="panel panel-primary" style="border: none;">
+        <div class="panel-body panel-body-landing">
+
 <table class="table">
         <thead>
             <tr class="info">
@@ -15,6 +18,8 @@
                 <th>Creation Date</th>
                 <th>Customer Id</th>
                 <th>Product</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,16 +30,18 @@
                     <td>${wishlist.customer.customerId}</td>
                     <td>${wishlist.product.productName}</td>
                     <td>
-                        <a href="<c:url value="${requestScope.servletPath}/addToCartFromWishlist"><c:param name="productId" value="${wishlist.product.productId}"/></c:url>">Add To Cart</a>
+                        <a href="<c:url value="${requestScope.servletPath}/customer/addToCartFromWishlist"><c:param name="productId" value="${wishlist.product.productId}"/></c:url>">Add To Cart</a>
                     </td>
                     <td>
-                        <a href="<c:url value="${requestScope.servletPath}/removeFromWishList"><c:param name="productId" value="${wishlist.product.productId}"/></c:url>">Remove from Wishlist</a>
+                        <a href="<c:url value="${requestScope.servletPath}/customer/removeFromWishList"><c:param name="productId" value="${wishlist.product.productId}"/></c:url>">Remove from Wishlist</a>
                     </td>
                 </tr>
         </c:forEach>
         <br/>
+        <tr><td></td><td>                <a href="<c:url value="${requestScope.servletPath}/customer/pageFlow"></c:url>">Go Back</a>
+</td></tr>
     </tbody>
 </table>
-
+</div></div></div>
 <%@include file="/WEB-INF/jspf/footer.jspf" %>
 

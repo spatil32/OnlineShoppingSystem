@@ -21,8 +21,8 @@
     </ul>
 </c:if>
     
-<a href="<c:url value="${requestScope.servletPath}/deleteAccount"></c:url>">Delete Account</a>    
-<form method="POST" style="text-align: center" action="<c:url value="/updateAccount"/>">
+<a href="<c:url value="${requestScope.servletPath}/customer/deleteAccount"></c:url>">Delete Account</a>    
+<form method="POST" style="text-align: center" action="<c:url value="/customer/updateAccount"/>">
     <div>
         <label for="customerId">Customer ID&nbsp;&nbsp;</label>
         <input readonly required class="form-horizontal" type="text" name="customerId" id="customerId" value="${loggedInCustomer.customerId}"/>

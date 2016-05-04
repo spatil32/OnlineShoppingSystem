@@ -10,7 +10,11 @@
 <%@include file="/WEB-INF/jspf/header.jspf" %>
 <h1 style="color: crimson">All Products!!</h1>
 
-<form method="POST" style="text-align: center" action="<c:url value="/previousOrders"/>">
+<div class="pricing-table">
+    <div class="panel panel-primary" style="border: none;">
+        <div class="panel-body panel-body-landing">
+
+<form method="POST" style="text-align: center" action="<c:url value="/customer/previousOrders"/>">
 <table class="table">
         <thead>
             <tr class="info">
@@ -34,4 +38,5 @@
 </table>
 <input class="btn-danger" type="submit" value="Back To Products Section" name="backToProductsSection" id="backToProductsSection"/>
 </form>
+        </div></div></div>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

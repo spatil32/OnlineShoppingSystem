@@ -8,8 +8,9 @@
 <%@include file="/WEB-INF/jspf/header.jspf" %>
 
 <h1 style="color: crimson">Feedback Form</h1>
-<form method="POST" style="text-align: center" action="<c:url value="/insertFeedback"/>">
+<form method="POST" style="text-align: center" action="<c:url value="/customer/insertFeedback"/>">
     <div>
+        <label for="feedback">Provide rating : &nbsp;&nbsp;</label>
         <select name="rating">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -19,6 +20,7 @@
         </select>
     </div>
     <div>
+        <label for="feedback">Comment : &nbsp;&nbsp;</label>
         <textarea required="true" name="comment"></textarea> 
     </div>
     <input class="btn-danger" type="submit" value="Submit" name="SubmitFeedback" id="SubmitFeedback"/>

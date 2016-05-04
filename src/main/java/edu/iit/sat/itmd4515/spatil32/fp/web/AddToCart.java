@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dell
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
+@WebServlet(name = "AddToCart", urlPatterns = {"/customer/addToCart"})
 public class AddToCart extends HttpServlet
 {
     @EJB
@@ -147,6 +147,6 @@ public class AddToCart extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

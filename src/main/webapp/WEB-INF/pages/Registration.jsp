@@ -24,7 +24,7 @@
     </ul>
 </c:if>
 
-<form method="POST" style="text-align: center" action="<c:url value="/newCustomer"/>">
+<form method="POST" style="text-align: center" action="<c:url value="/customer/newCustomer"/>">
     <div>
         <label for="firstName">Enter First Name&nbsp;&nbsp;</label>
         <input required class="form-horizontal" type="text" name="firstName" id="firstName" value="${customer.firstName}"/>

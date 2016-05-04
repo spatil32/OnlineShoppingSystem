@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "PageFlow", urlPatterns = {"/pageFlow"})
+@WebServlet(name = "PageFlow", urlPatterns = {"/customer/pageFlow"})
 public class PageFlow extends HttpServlet
 {
     @EJB
@@ -88,6 +88,6 @@ public class PageFlow extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

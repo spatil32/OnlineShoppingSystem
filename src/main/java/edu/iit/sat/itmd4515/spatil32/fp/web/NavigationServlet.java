@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "NavigationServlet", urlPatterns = {"/navigationServlet"})
+@WebServlet(name = "NavigationServlet", urlPatterns = {"/admin/navigationServlet"})
 public class NavigationServlet extends HttpServlet 
 {
     @EJB
@@ -95,6 +95,6 @@ public class NavigationServlet extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

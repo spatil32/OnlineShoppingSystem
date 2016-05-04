@@ -22,7 +22,7 @@
 </c:if>
     
     
-<form method="POST" style="text-align: center" action="<c:url value="/UpdateProduct"/>">
+<form method="POST" style="text-align: center" action="<c:url value="/admin/UpdateProduct"/>">
     <div>
         <label for="customerId">Product ID</label>
         <input readonly class="form-horizontal" type="number" name="productId" id="productId" value="${products.productId}"/>

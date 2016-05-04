@@ -27,7 +27,7 @@ import javax.validation.Validator;
  *
  * @author Dell
  */
-@WebServlet(name = "NewProduct", urlPatterns = {"/newProduct"})
+@WebServlet(name = "NewProduct", urlPatterns = {"/admin/newProduct"})
 public class NewProduct extends HttpServlet 
 {
 
