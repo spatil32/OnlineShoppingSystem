@@ -77,7 +77,7 @@ public class StartupBean
        Customer adminCustomer = new Customer("admin", "admin", 27, 'M', "Pune", "admin@admin.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "admin", "admin", 'Y');
        customerService.create(adminCustomer);
 
-       Customer newCustomer1 = new Customer("Shreyas", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "shreyas", "patil", 'N');
+       Customer newCustomer1 = new Customer("Shreyas", "Patil", 25, 'M', "Pune", "patilsr91@gmail.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "shreyas", "patil", 'N');
        customerService.create(newCustomer1);
        
        Customer newCustomer2 = new Customer("Revan", "Patil", 25, 'M', "Pune", "shreyas@patil.com", new GregorianCalendar(1991, 5, 16).getTime(), "12345", "revan", "patil", 'N');

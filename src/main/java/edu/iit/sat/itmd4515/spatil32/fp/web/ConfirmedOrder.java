@@ -13,6 +13,7 @@ import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.Basket_ProductsService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.EmailService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
@@ -54,6 +55,10 @@ public class ConfirmedOrder extends HttpServlet
     @EJB
     Basket_ProductsService basketProductsService;
     
+    @EJB
+    EmailService emailService;
+
+    
     private static final Logger LOG = Logger.getLogger(ConfirmedOrder.class.getName());
 
     /**
@@ -94,11 +99,6 @@ public class ConfirmedOrder extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        
-        //JMS
-        
-        
-        //End of JMS
         if(request.isUserInRole("ADMIN"))
         {
             request.logout();
@@ -106,6 +106,10 @@ public class ConfirmedOrder extends HttpServlet
         }
         else
         {
+            Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
+            Orders currentOrder = (Orders)request.getSession().getAttribute("currentOrder");
+            emailService.doSendMail(loggedInCustomer, currentOrder);
+
             ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
             Iterator<Products> iterator = cartProducts.iterator();
             while(iterator.hasNext())
