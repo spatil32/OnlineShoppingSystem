@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 /**
  * Used for creating Administrator user in project
  *
- * @author dwadekar
+ * @author Dell
  */
 @Entity
 @NamedQueries({
@@ -51,5 +51,4 @@ public class Admin extends CommonEntity {
     public void setUser(User user) {
         this.user = user;
     }
-
 }

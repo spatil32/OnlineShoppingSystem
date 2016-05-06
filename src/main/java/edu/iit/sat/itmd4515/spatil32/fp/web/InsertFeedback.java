@@ -25,17 +25,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "InsertFeedback", urlPatterns = {"/customer/insertFeedback"})
-public class InsertFeedback extends HttpServlet
-{
+@WebServlet(name = "InsertFeedback", urlPatterns = {"/insertFeedback"})
+public class InsertFeedback extends HttpServlet {
+
     @EJB
     FeedbackService feedbackService;
-    
+
     @EJB
     CustomerService customerService;
-    
+
     @EJB
     OrderService orderService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -53,7 +54,7 @@ public class InsertFeedback extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertFeedback</title>");            
+            out.println("<title>Servlet InsertFeedback</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet InsertFeedback at " + request.getContextPath() + "</h1>");
@@ -72,8 +73,7 @@ public class InsertFeedback extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/Feedback.jsp").forward(request, response);
     }
 
@@ -87,16 +87,16 @@ public class InsertFeedback extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         Integer rating = null;
-        if(!WebUtil.isEmpty(request.getParameter("rating")))
+        if (!WebUtil.isEmpty(request.getParameter("rating"))) {
             rating = Integer.parseInt(WebUtil.trimParam(request.getParameter("rating")));
+        }
         String comment = WebUtil.trimParam(request.getParameter("comment"));
         Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
         Feedback newFeedback = new Feedback(loggedInCustomer, new Date(), comment, rating);
         feedbackService.create(newFeedback);
-        Orders currentOrderDetails = (Orders)request.getSession().getAttribute("currentOrder");
+        Orders currentOrderDetails = (Orders) request.getSession().getAttribute("currentOrder");
         request.setAttribute("currentOrder", currentOrderDetails);
         request.getRequestDispatcher("/WEB-INF/pages/Orders.jsp").forward(request, response);
     }
@@ -109,6 +109,5 @@ public class InsertFeedback extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 /**
  * Used to provide services to Administrator Group
  *
- * @author dwadekar
+ * @author Dell
  */
 @Stateless
 public class AdminService extends AbstractService<Admin> {

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -28,22 +29,22 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AddToCartFromWishlist", urlPatterns = {"/customer/addToCartFromWishlist"})
-public class AddToCartFromWishlist extends HttpServlet
-{
+@WebServlet(name = "AddToCartFromWishlist", urlPatterns = {"/addToCartFromWishlist"})
+public class AddToCartFromWishlist extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(AddToCartFromWishlist.class.getName());
     @EJB
     CustomerService customerService;
-    
+
     @EJB
     ProductService productService;
 
     @EJB
     BasketService basketService;
-    
+
     @EJB
     WishlistService wishlistService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,7 +62,7 @@ public class AddToCartFromWishlist extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddToCartFromWishlist</title>");            
+            out.println("<title>Servlet AddToCartFromWishlist</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddToCartFromWishlist at " + request.getContextPath() + "</h1>");
@@ -80,17 +81,17 @@ public class AddToCartFromWishlist extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+            throws ServletException, IOException {
+        ArrayList<Products> cartProducts = (ArrayList<Products>) request.getSession().getAttribute("selectedProducts");
         Long productId = null;
-        if(!WebUtil.isEmpty(request.getParameter("productId")))
+        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
             productId = Long.parseLong(request.getParameter("productId"));
-        
+        }
+
         Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
         Products cartProduct = productService.findByProductID(productId);
         cartProducts.add(cartProduct);
-        LOG.info("in doget : " + cartProducts.size());
+        LOG.log(Level.INFO, "in doget : {0}", cartProducts.size());
         Basket newBasket = new Basket(new Date(), 1, cartProduct.getPrice(), loggedInCustomer);
         newBasket.addProducts(cartProduct);
         basketService.create(newBasket);
@@ -122,6 +123,6 @@ public class AddToCartFromWishlist extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

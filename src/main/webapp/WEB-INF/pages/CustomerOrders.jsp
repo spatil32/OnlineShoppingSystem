@@ -13,29 +13,31 @@
     <div class="panel panel-primary" style="border: none;">
         <div class="panel-body panel-body-landing">
 
-<form method="POST" style="text-align: center" action="<c:url value="/admin/navigationServlet"/>">
-<table class="table">
-        <thead>
-            <tr class="info">
-                <th>Customer Name</th>
-                <th>Order Id</th>
-                <th>Delivery Date</th>
-                <th>Total Bill Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${requestScope.allOrders}" var="order">
-                <tr class="danger">
-                    <td>${order.customer.firstName}</td>
-                    <td>${order.orderId}</td>
-                    <td>${order.deliveryDate}</td>
-                    <td>${order.totalBillAmount}</td>
-                </tr>
-        </c:forEach>
-        <br/>
-    </tbody>
-</table>
-<input class="btn-danger" type="submit" value="Go Back" name="goBack" id="goBack"/>
-</form>
-        </div></div></div>
+            <form method="POST" style="text-align: center" action="<c:url value="/navigationServlet"/>">
+                <table class="table">
+                    <thead>
+                        <tr class="info">
+                            <th>Customer Name</th>
+                            <th>Order Id</th>
+                            <th>Delivery Date</th>
+                            <th>Total Bill Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.allOrders}" var="order">
+                            <tr class="danger">
+                                <td>${order.customer.firstName}</td>
+                                <td>${order.orderId}</td>
+                                <td>${order.deliveryDate}</td>
+                                <td>${order.totalBillAmount}</td>
+                            </tr>
+                        </c:forEach>
+                    <br/>
+                    </tbody>
+                </table>
+                <input class="btn-danger" type="submit" value="Go Back" name="goBack" id="goBack"/>
+            </form>
+        </div>
+    </div>
+</div>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

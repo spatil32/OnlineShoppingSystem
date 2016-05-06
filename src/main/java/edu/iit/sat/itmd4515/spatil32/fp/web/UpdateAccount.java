@@ -28,18 +28,16 @@ import javax.validation.Validator;
  *
  * @author Dell
  */
-@WebServlet(name = "UpdateAccount", urlPatterns = {"/customer/updateAccount"})
-public class UpdateAccount extends HttpServlet 
-{
+@WebServlet(name = "UpdateAccount", urlPatterns = {"/updateAccount"})
+public class UpdateAccount extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(UpdateAccount.class.getName());
     @EJB
     CustomerService customerService;
-    
+
     @Resource
     Validator validator;
-    
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,7 +55,7 @@ public class UpdateAccount extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateAccount</title>");            
+            out.println("<title>Servlet UpdateAccount</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateAccount at " + request.getContextPath() + "</h1>");
@@ -76,8 +74,7 @@ public class UpdateAccount extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.setAttribute("loggedInCustomer", customerService.findByCustomerId(LoginCustomer.CustomeID));
         request.getRequestDispatcher("/WEB-INF/pages/UpdateAccount.jsp").forward(request, response);
     }
@@ -92,8 +89,7 @@ public class UpdateAccount extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         Integer customerId = Integer.parseInt(WebUtil.trimParam(request.getParameter("customerId")));
         String firstName = WebUtil.trimParam(request.getParameter("firstName"));
         String lastName = WebUtil.trimParam(request.getParameter("lastName"));
@@ -106,23 +102,19 @@ public class UpdateAccount extends HttpServlet
         int birthDay = Integer.parseInt(birth[2]);
         int birthMonth = Integer.parseInt(birth[1]);
         int birthYear = Integer.parseInt(birth[0]);
-        Date birthdate = new GregorianCalendar(birthYear,birthMonth ,birthDay).getTime();
+        Date birthdate = new GregorianCalendar(birthYear, birthMonth, birthDay).getTime();
         String phoneNo = WebUtil.trimParam(request.getParameter("phoneNo"));
         Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
         Customer updateCustomer = new Customer(customerId, firstName, lastName, age, gender.charAt(0), address, email, birthdate, phoneNo, loggedInCustomer.getUsername(), loggedInCustomer.getPassword());
         Set<ConstraintViolation<Customer>> violations = validator.validate(updateCustomer);
-        if(violations.isEmpty())
-        {
-            Orders orders = (Orders)request.getSession().getAttribute("currentOrder");
+        if (violations.isEmpty()) {
+            Orders orders = (Orders) request.getSession().getAttribute("currentOrder");
             customerService.UpdateCustomer(updateCustomer);
             request.setAttribute("currentOrder", orders);
             request.getRequestDispatcher("/WEB-INF/pages/Orders.jsp").forward(request, response);
-        }
-        else
-        {
+        } else {
             LOG.info("There are " + violations.size() + " violations in update form as below : \n");
-            for (ConstraintViolation<Customer> violation : violations) 
-            {
+            for (ConstraintViolation<Customer> violation : violations) {
                 LOG.info("#####" + violation.getRootBeanClass().getSimpleName()
                         + "." + violation.getPropertyPath() + " failed violation:\t"
                         + violation.getInvalidValue() + " failed with message " + violation.getMessage());
@@ -141,6 +133,6 @@ public class UpdateAccount extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

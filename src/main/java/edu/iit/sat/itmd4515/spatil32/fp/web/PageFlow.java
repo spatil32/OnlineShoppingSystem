@@ -19,11 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "PageFlow", urlPatterns = {"/customer/pageFlow"})
-public class PageFlow extends HttpServlet
-{
+@WebServlet(name = "PageFlow", urlPatterns = {"/pageFlow"})
+public class PageFlow extends HttpServlet {
+
     @EJB
     ProductService productService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,7 +42,7 @@ public class PageFlow extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PageFlow</title>");            
+            out.println("<title>Servlet PageFlow</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet PageFlow at " + request.getContextPath() + "</h1>");
@@ -60,8 +61,7 @@ public class PageFlow extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.setAttribute("allProducts", productService.findAll());
         request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
@@ -89,5 +89,4 @@ public class PageFlow extends HttpServlet
     public String getServletInfo() {
         return "Short description";
     }
-
 }

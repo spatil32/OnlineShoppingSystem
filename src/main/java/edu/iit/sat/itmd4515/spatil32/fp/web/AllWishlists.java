@@ -27,27 +27,26 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AllWishlists", urlPatterns = {"/customer/allWishlists"})
-public class AllWishlists extends HttpServlet 
-{
+@WebServlet(name = "AllWishlists", urlPatterns = {"/allWishlists"})
+public class AllWishlists extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(AllWishlists.class.getName());
     @EJB
     WishlistService wishlistService;
-    
+
     @EJB
     BasketService basketService;
-    
+
     @EJB
     Basket_ProductsService basketProductsService;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
      * @param request servlet request
      * @param response servlet response
-     * 
+     *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -59,7 +58,7 @@ public class AllWishlists extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AllWishlists</title>");            
+            out.println("<title>Servlet AllWishlists</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AllWishlists at " + request.getContextPath() + "</h1>");
@@ -78,12 +77,10 @@ public class AllWishlists extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+            throws ServletException, IOException {
+        ArrayList<Products> cartProducts = (ArrayList<Products>) request.getSession().getAttribute("selectedProducts");
         Iterator<Products> iterator = cartProducts.iterator();
-        while(iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             iterator.next();
             iterator.remove();
         }
@@ -118,6 +115,5 @@ public class AllWishlists extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

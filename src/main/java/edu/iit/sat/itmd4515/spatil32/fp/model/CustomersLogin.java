@@ -51,5 +51,4 @@ public class CustomersLogin extends CommonEntity {
     public void setUser(User user) {
         this.user = user;
     }
-
 }

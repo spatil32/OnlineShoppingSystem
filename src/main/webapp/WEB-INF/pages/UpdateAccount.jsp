@@ -3,13 +3,10 @@
     Created on : Apr 30, 2016, 11:52:39 PM
     Author     : Dell
 --%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%@include file="/WEB-INF/jspf/header.jspf" %>
-<h1>Update Product.!!</h1>
-
+<h1>Update Account.!!</h1>
 <c:if test="${not empty requestScope.violations}">
     <h2 style="color: red">Violations were found in Update customer!</h2>
     <ul>
@@ -20,9 +17,9 @@
         </c:forEach>
     </ul>
 </c:if>
-    
-<a href="<c:url value="${requestScope.servletPath}/customer/deleteAccount"></c:url>">Delete Account</a>    
-<form method="POST" style="text-align: center" action="<c:url value="/customer/updateAccount"/>">
+
+<a href="<c:url value="${requestScope.servletPath}/deleteAccount"></c:url>">Delete Account</a>    
+<form method="POST" style="text-align: center" action="<c:url value="/updateAccount"/>">
     <div>
         <label for="customerId">Customer ID&nbsp;&nbsp;</label>
         <input readonly required class="form-horizontal" type="text" name="customerId" id="customerId" value="${loggedInCustomer.customerId}"/>
@@ -60,8 +57,7 @@
         <input required class="form-horizontal" type="text" name="phoneNo" id="phoneNo" value="${loggedInCustomer.phoneNo}"/>
     </div>
     <div/>
-<input class="btn-danger" type="submit" name="Update Account" id="submitAccount"/>
+    <input class="btn-danger" type="submit" name="Update Account" id="submitAccount"/>
 </form>
-        
 <%@include file="/WEB-INF/jspf/footer.jspf" %>
 

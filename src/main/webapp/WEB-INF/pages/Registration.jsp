@@ -24,7 +24,7 @@
     </ul>
 </c:if>
 
-<form method="POST" style="text-align: center" action="<c:url value="/customer/newCustomer"/>">
+<form method="POST" style="text-align: center" action="<c:url value="/newCustomer"/>">
     <div>
         <label for="firstName">Enter First Name&nbsp;&nbsp;</label>
         <input required class="form-horizontal" type="text" name="firstName" id="firstName" value="${customer.firstName}"/>
@@ -68,6 +68,4 @@
     <div/>
     <input class="btn-danger" type="submit" name="submitCustomer" id="submitCustomer"/>
 </form>
-
-
 <%@include file="/WEB-INF/jspf/footer.jspf" %>

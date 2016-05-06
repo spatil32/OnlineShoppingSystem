@@ -27,9 +27,8 @@ import javax.validation.Validator;
  *
  * @author Dell
  */
-@WebServlet(name = "NewCustomer", urlPatterns = {"/customer/newCustomer"})
-public class NewCustomer extends HttpServlet
-{
+@WebServlet(name = "NewCustomer", urlPatterns = {"/newCustomer"})
+public class NewCustomer extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(NewCustomer.class.getName());
     @EJB
@@ -37,6 +36,7 @@ public class NewCustomer extends HttpServlet
 
     @Resource
     Validator validator;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,7 +54,7 @@ public class NewCustomer extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewCustomer</title>");            
+            out.println("<title>Servlet NewCustomer</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewCustomer at " + request.getContextPath() + "</h1>");
@@ -73,8 +73,7 @@ public class NewCustomer extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/Registration.jsp").forward(request, response);
     }
 
@@ -88,8 +87,7 @@ public class NewCustomer extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         String firstName = WebUtil.trimParam(request.getParameter("firstName"));
         String lastName = WebUtil.trimParam(request.getParameter("lastName"));
         Integer age = Integer.parseInt(WebUtil.trimParam(request.getParameter("age")));
@@ -101,24 +99,20 @@ public class NewCustomer extends HttpServlet
         int birthDay = Integer.parseInt(birth[2]);
         int birthMonth = Integer.parseInt(birth[1]);
         int birthYear = Integer.parseInt(birth[0]);
-        Date birthdate = new GregorianCalendar(birthYear,birthMonth ,birthDay).getTime();
+        Date birthdate = new GregorianCalendar(birthYear, birthMonth, birthDay).getTime();
         String phoneNo = WebUtil.trimParam(request.getParameter("phoneNo"));
         String username = WebUtil.trimParam(request.getParameter("username"));
         String password = WebUtil.trimParam(request.getParameter("password"));
-        
+
         Customer newCustomer = new Customer(firstName, lastName, age, gender.charAt(0), address, email, birthdate, phoneNo, username, password);
         Set<ConstraintViolation<Customer>> violations = validator.validate(newCustomer);
-        
-        if(violations.isEmpty())
-        {
+
+        if (violations.isEmpty()) {
             customerService.create(newCustomer);
             request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
-        }
-        else
-        {
+        } else {
             LOG.info("There are " + violations.size() + " violations in registration form as below : \n");
-            for (ConstraintViolation<Customer> violation : violations) 
-            {
+            for (ConstraintViolation<Customer> violation : violations) {
                 LOG.info("#####" + violation.getRootBeanClass().getSimpleName()
                         + "." + violation.getPropertyPath() + " failed violation:\t"
                         + violation.getInvalidValue() + " failed with message " + violation.getMessage());

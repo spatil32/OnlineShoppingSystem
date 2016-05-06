@@ -4,34 +4,34 @@
  * and open the template in the editor.
  */
 package edu.iit.sat.itmd4515.spatil32.fp.service;
+
 import edu.iit.sat.itmd4515.spatil32.fp.cdi.EmailBean;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *
  * @author Dell
  */
 @Stateless
-public class EmailService
-{
+public class EmailService {
+
     private static final Logger LOG = Logger.getLogger(EmailService.class.getName());
-    
+
     private String firstName;
     private String lastName;
     private String email;
 
     @Inject
     EmailBean emailBean;
-    
+
     public EmailService() {
     }
-    
+
     /**
      * Get the value of firstName
      *
@@ -49,8 +49,6 @@ public class EmailService
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
-    
 
     /**
      * Get the value of lastName
@@ -70,8 +68,6 @@ public class EmailService
         this.lastName = lastName;
     }
 
-    
-
     /**
      * Get the value of email
      *
@@ -90,19 +86,18 @@ public class EmailService
         this.email = email;
     }
 
-        public void doSendMail(Customer customer, Orders order)
-        {
-        LOG.info("Sending mail to " + customer.getFirstName());
-        LOG.info("Sending mail on email " + customer.getEmail());
+    public void doSendMail(Customer customer, Orders order) {
+        LOG.log(Level.INFO, "Sending mail to {0}", customer.getFirstName());
+        LOG.log(Level.INFO, "Sending mail on email {0}", customer.getEmail());
 
         String subject = "Order Confirmation";
         String body = "Hi " + customer.getFirstName() + ",\n Your order has been placed.!!!\n The total bill is "
                 + order.getTotalBillAmount() + " & will be deliverd by " + order.getDeliveryDate()
-                 + "\n\n Thank you for shopping with us!! \n\n Enjoy shopping with our flat rate discounts in seasons.\n"
+                + "\n\n Thank you for shopping with us!! \n\n Enjoy shopping with our flat rate discounts in seasons.\n"
                 + "We hope to see you again.!!";
 
         emailBean.sendMail(customer.getEmail(), subject, body);
-        LOG.info("Mail sent to " + customer.getEmail());
+        LOG.log(Level.INFO, "Mail sent to {0}", customer.getEmail());
     }
-    
+
 }

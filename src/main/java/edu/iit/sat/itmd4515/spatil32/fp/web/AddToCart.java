@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dell
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/customer/addToCart"})
+@WebServlet(name = "AddToCart", urlPatterns = {"/addToCart"})
 public class AddToCart extends HttpServlet
 {
     @EJB
@@ -96,7 +96,6 @@ public class AddToCart extends HttpServlet
             basketService.create(newBasket);
         }
         request.setAttribute("allProducts", productService.findAll());
-        LOG.info("No Error in doGet");
         request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
 
@@ -112,15 +111,13 @@ public class AddToCart extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        LOG.info("came to doPost");
         LOG.info(basketService.findAll().toString());
         request.setAttribute("basketProducts", basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID));
         
         HttpSession session = request.getSession();
         
-        LOG.info("in dopost : " + cartProducts.size());
+        LOG.info("in do post() : " + cartProducts.size());
         session.setAttribute("selectedProducts", cartProducts);
-        LOG.info("Printed in JSP");
         List<Basket> b = basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID);
         int i = 0;
         for (Basket basket : b)

@@ -68,5 +68,4 @@ public class CommonEntity {
     public Date getCreationDate() {
         return creationDate;
     }
-
 }

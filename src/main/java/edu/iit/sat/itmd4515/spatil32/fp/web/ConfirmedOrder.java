@@ -6,7 +6,6 @@
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
 import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
-import edu.iit.sat.itmd4515.spatil32.fp.model.BasketProducts;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
@@ -126,7 +125,6 @@ public class ConfirmedOrder extends HttpServlet
             request.getSession().removeAttribute("selectedProducts");
             request.getSession().removeAttribute("currentOrder");
             request.logout();
-            //request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
             request.getRequestDispatcher("login.html").forward(request, response);
         }
     }
@@ -172,6 +170,5 @@ public class ConfirmedOrder extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

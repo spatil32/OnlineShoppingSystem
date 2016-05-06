@@ -28,18 +28,16 @@ import javax.validation.Validator;
  *
  * @author Dell
  */
-@WebServlet(name = "UpdateProduct", urlPatterns = {"/admin/UpdateProduct"})
-public class UpdateProduct extends HttpServlet
-{
+@WebServlet(name = "UpdateProduct", urlPatterns = {"/UpdateProduct"})
+public class UpdateProduct extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(UpdateProduct.class.getName());
     @Resource
     Validator validator;
-    
+
     @EJB
     ProductService productService;
-            
-            
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,7 +55,7 @@ public class UpdateProduct extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateProduct</title>");            
+            out.println("<title>Servlet UpdateProduct</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateProduct at " + request.getContextPath() + "</h1>");
@@ -90,11 +88,9 @@ public class UpdateProduct extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         Integer productId = null;
-        if (!WebUtil.isEmpty(request.getParameter("productId"))) 
-        {
+        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
             productId = Integer.parseInt(WebUtil.trimParam(request.getParameter("productId")));
         }
         String productName = WebUtil.trimParam(request.getParameter("productName"));
@@ -103,18 +99,17 @@ public class UpdateProduct extends HttpServlet
         int mfgDay = Integer.parseInt(date[2]);
         int mfgMonth = Integer.parseInt(date[1]);
         int mfgYear = Integer.parseInt(date[0]);
-        Date mfgdate = new GregorianCalendar(mfgYear,mfgMonth ,mfgDay).getTime();
+        Date mfgdate = new GregorianCalendar(mfgYear, mfgMonth, mfgDay).getTime();
         String category = WebUtil.trimParam(request.getParameter("category"));
         Integer price = Integer.parseInt(WebUtil.trimParam(request.getParameter("price")));
         Integer discount = Integer.parseInt(WebUtil.trimParam(request.getParameter("discount")));
         Integer totalQty = Integer.parseInt(WebUtil.trimParam(request.getParameter("totalQty")));
         Integer availableQty = Integer.parseInt(WebUtil.trimParam(request.getParameter("availableQty")));
-        
+
         Products editProduct = new Products(productId, productName, mfgdate, category.charAt(0), price, discount, totalQty, availableQty);
         Set<ConstraintViolation<Products>> violations = validator.validate(editProduct);
-        
-        if (violations.isEmpty()) 
-        {
+
+        if (violations.isEmpty()) {
             productService.updateProducByProductId(editProduct);
             request.setAttribute("allProducts", productService.findAll());
             request.getRequestDispatcher("/WEB-INF/pages/AllProducts.jsp").forward(request, response);
@@ -130,8 +125,7 @@ public class UpdateProduct extends HttpServlet
             request.setAttribute("products", editProduct);
             request.getRequestDispatcher("WEB-INF/pages/UpdateProduct.jsp").forward(request, response);
         }
-        
-        
+
     }
 
     /**
@@ -142,6 +136,5 @@ public class UpdateProduct extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

@@ -25,17 +25,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AddToWishList", urlPatterns = {"/customer/addToWishList"})
-public class AddToWishList extends HttpServlet
-{
+@WebServlet(name = "AddToWishList", urlPatterns = {"/addToWishList"})
+public class AddToWishList extends HttpServlet {
+
     @EJB
-    CustomerService customerService; 
-    
+    CustomerService customerService;
+
     @EJB
     ProductService productService;
-    
+
     @EJB
     WishlistService wishlistService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -53,7 +54,7 @@ public class AddToWishList extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddToWishList</title>");            
+            out.println("<title>Servlet AddToWishList</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddToWishList at " + request.getContextPath() + "</h1>");
@@ -72,11 +73,11 @@ public class AddToWishList extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         Long productId = null;
-        if(!WebUtil.isEmpty(request.getParameter("productId")))
+        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
             productId = Long.parseLong(request.getParameter("productId"));
+        }
         Products wishlistProduct = productService.findByProductID(productId);
         Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
         Wishlist newWishlist = new Wishlist(loggedInCustomer, wishlistProduct, new Date());
@@ -108,5 +109,4 @@ public class AddToWishList extends HttpServlet
     public String getServletInfo() {
         return "Short description";
     }
-
 }

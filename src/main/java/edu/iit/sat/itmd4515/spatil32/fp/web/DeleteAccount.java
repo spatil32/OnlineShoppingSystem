@@ -5,7 +5,6 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.Basket_ProductsService;
@@ -17,7 +16,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,26 +27,27 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "DeleteAccount", urlPatterns = {"/customer/deleteAccount"})
-public class DeleteAccount extends HttpServlet
-{
+@WebServlet(name = "DeleteAccount", urlPatterns = {"/deleteAccount"})
+public class DeleteAccount extends HttpServlet {
+
     @EJB
     CustomerService customerSerivce;
-    
+
     @EJB
     BasketService basketService;
-    
+
     @EJB
     Basket_ProductsService basketProductsService;
-    
+
     @EJB
     OrderService orderService;
-    
+
     @EJB
     WishlistService wishlistService;
-    
+
     @EJB
     FeedbackService feedbackService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,7 +65,7 @@ public class DeleteAccount extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteAccount</title>");            
+            out.println("<title>Servlet DeleteAccount</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DeleteAccount at " + request.getContextPath() + "</h1>");
@@ -85,12 +84,10 @@ public class DeleteAccount extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
-        ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+            throws ServletException, IOException {
+        ArrayList<Products> cartProducts = (ArrayList<Products>) request.getSession().getAttribute("selectedProducts");
         Iterator<Products> iterator = cartProducts.iterator();
-        while(iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             iterator.next();
             iterator.remove();
         }
@@ -129,6 +126,5 @@ public class DeleteAccount extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

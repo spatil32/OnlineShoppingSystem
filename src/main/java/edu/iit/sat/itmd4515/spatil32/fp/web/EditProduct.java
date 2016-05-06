@@ -21,10 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author Dell
  */
 @WebServlet(name = "EditProduct", urlPatterns = {"/editProduct"})
-public class EditProduct extends HttpServlet 
-{
+public class EditProduct extends HttpServlet {
+
     @EJB
     ProductService productService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,7 +43,7 @@ public class EditProduct extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProduct</title>");            
+            out.println("<title>Servlet EditProduct</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EditProduct at " + request.getContextPath() + "</h1>");
@@ -61,11 +62,9 @@ public class EditProduct extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         Long productId = null;
-        if (!WebUtil.isEmpty(request.getParameter("productId"))) 
-        {
+        if (!WebUtil.isEmpty(request.getParameter("productId"))) {
             productId = Long.parseLong(WebUtil.trimParam(request.getParameter("productId")));
             Products product = productService.findByProductID(productId);
             request.setAttribute("products", product);
@@ -83,8 +82,7 @@ public class EditProduct extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         request.setAttribute("allProducts", productService.findAll());
         request.getRequestDispatcher("/WEB-INF/pages/AllProducts.jsp").forward(request, response);
     }

@@ -25,14 +25,13 @@ import javax.persistence.Table;
     @NamedQuery(name = "BasketProducts.FindByBasketId", query = "select b from BasketProducts b where b.basketId = :id"),
     @NamedQuery(name = "BasketProducts.DeleteByBasketId", query = "delete from BasketProducts b where b.basketId = :id")
 })
-public class BasketProducts 
-{
+public class BasketProducts {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int basketProductId;
     private int basketId;
-    private int productId;    
-    
+    private int productId;
 
     public BasketProducts() {
     }
@@ -58,6 +57,4 @@ public class BasketProducts
     public int getProductId() {
         return productId;
     }
-
-    
 }

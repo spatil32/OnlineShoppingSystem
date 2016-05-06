@@ -24,8 +24,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- * Products POJO consist of all data fields to be persisted, constructors, getters, setters and toString() method.
- * It also contains JPA mappings and persistence annotations to persist table in database.
+ * Products POJO consist of all data fields to be persisted, constructors,
+ * getters, setters and toString() method. It also contains JPA mappings and
+ * persistence annotations to persist table in database.
+ *
  * @author Dell
  */
 @Entity
@@ -35,11 +37,10 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Products.findProductById", query = "select p from Products p where p.productId = :id"),
     @NamedQuery(name = "Products.UpdateProductById", query = "update Products p SET p.productName = :name, p.mfgDate = :mfgDate,"
             + "p.category = :category, p.price = :price, p.discount = :discount, p.totalQty = :total, p.availableQty = :available where p.productId = :id"),
-    @NamedQuery(name = "Products.DeleteProductById", query = "delete from Products p where p.productId = :id"),
-})
+    @NamedQuery(name = "Products.DeleteProductById", query = "delete from Products p where p.productId = :id"),})
 
-public class Products 
-{
+public class Products {
+
     //primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -238,7 +239,7 @@ public class Products
     /**
      *
      * @param availableQty sets new count of available products
-     */ 
+     */
     public void setAvailableQty(int availableQty) {
         this.availableQty = availableQty;
     }
@@ -274,9 +275,9 @@ public class Products
     public void setBasket(List<Basket> basket) {
         this.basket = basket;
     }
-    
+
     @Override
     public String toString() {
         return "Products{" + "productId=" + productId + ", productName=" + productName + ", mfgDate=" + mfgDate + ", category=" + category + ", price=" + price + ", discount=" + discount + ", totalQty=" + totalQty + ", availableQty=" + availableQty + '}';
-    }    
+    }
 }

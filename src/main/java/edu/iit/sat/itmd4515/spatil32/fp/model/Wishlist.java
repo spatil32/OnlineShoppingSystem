@@ -19,8 +19,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Wishlist POJO consist of all data fields to be persisted, constructors, getters, setters and toString() method.
- * It also contains JPA mappings and persistence annotations to persist table in database.
+ * Wishlist POJO consist of all data fields to be persisted, constructors,
+ * getters, setters and toString() method. It also contains JPA mappings and
+ * persistence annotations to persist table in database.
+ *
  * @author Dell
  */
 @Entity
@@ -31,13 +33,13 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Wishlist.deleteWishlistsByProductId", query = "delete from Wishlist w where w.product.productId = :id"),
     @NamedQuery(name = "Wishlist.deleteWishlistsByCustomerId", query = "delete from Wishlist w where w.customer.customerId = :id")
 })
-public class Wishlist 
-{
+public class Wishlist {
+
     //primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int wishlistId;
-    
+
     //foreign key mapping
     //Many wishlists one customer
     @ManyToOne

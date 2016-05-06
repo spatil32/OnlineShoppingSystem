@@ -58,10 +58,8 @@ public class NavigateCustomer extends HttpServlet
             out.println("<title>Servlet NavigateCustomer</title>");            
             out.println("</head>");
             out.println("<body>");
-            LOG.info("customer servlet madhe ala");
             if(request.isUserInRole("CUSTOMER"))
             {
-                LOG.info("Customer role madhe ahe");
                 CustomersLogin cust = customerLoginService.findByUsername(request.getRemoteUser());
                 String username = cust.getUser().getUserName();
                 Customer loggedInCustomer = customerService.findCustomerByUsername(username);
@@ -70,7 +68,6 @@ public class NavigateCustomer extends HttpServlet
                 request.setAttribute("allProducts", productService.findAll());
                 request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);                
             }
-                
             out.println("<h1>Servlet NavigateCustomer at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

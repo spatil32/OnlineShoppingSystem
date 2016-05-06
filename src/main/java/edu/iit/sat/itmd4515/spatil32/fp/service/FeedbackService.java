@@ -15,21 +15,18 @@ import javax.persistence.TypedQuery;
  * @author Dell
  */
 @Stateless
-public class FeedbackService extends AbstractService<Feedback>
-{
+public class FeedbackService extends AbstractService<Feedback> {
 
     public FeedbackService() {
         super(Feedback.class);
     }
-    
+
     @Override
-    public List<Feedback> findAll() 
-    {
+    public List<Feedback> findAll() {
         return em.createNamedQuery("Feedback.seeAllFeedbacks").getResultList();
     }
-    
-    public void deleteFeedbackByCustomerId(Integer id)
-    {
+
+    public void deleteFeedbackByCustomerId(Integer id) {
         TypedQuery<Feedback> query = em.createNamedQuery("Feedback.DeleteFeedbackByCustomerId", Feedback.class);
         query.setParameter("id", id);
         int deleted = query.executeUpdate();

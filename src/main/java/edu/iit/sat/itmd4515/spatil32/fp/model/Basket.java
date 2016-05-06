@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
  *
  * @author Dell
  */
-@Entity 
+@Entity
 @Table(name = "spatil32_Basket")
 @NamedQueries({
     @NamedQuery(name = "Basket.seeAllCustomersBaskets", query = "select b from Basket b"),

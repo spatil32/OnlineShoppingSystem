@@ -6,13 +6,13 @@
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
 /**
- * @author Dell
- * This class contains static methods to check input parameters.
+ * @author Dell This class contains static methods to check input parameters.
  */
 public class WebUtil {
 
     /**
      * Checks if input parameter is empty
+     *
      * @param param parameter
      * @return true or false
      */
@@ -26,6 +26,7 @@ public class WebUtil {
 
     /**
      * Trims input parameter
+     *
      * @param param parameter
      * @return string
      */

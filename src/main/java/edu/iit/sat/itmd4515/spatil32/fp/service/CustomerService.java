@@ -16,53 +16,45 @@ import javax.persistence.TypedQuery;
  * @author Dell
  */
 @Stateless
-public class CustomerService extends AbstractService<Customer>
-{
+public class CustomerService extends AbstractService<Customer> {
 
     private static final Logger LOG = Logger.getLogger(CustomerService.class.getName());
 
-    public CustomerService()
-    {
+    public CustomerService() {
         super(Customer.class);
     }
 
     @Override
-    public List<Customer> findAll() 
-    {
+    public List<Customer> findAll() {
         return em.createNamedQuery("Customer.seeAllCustomers").getResultList();
     }
-    
-    public Customer findByCustomerName(String username)
-    {
+
+    public Customer findByCustomerName(String username) {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerByName", Customer.class);
         query.setParameter("name", username);
         return query.getSingleResult();
     }
-    
-    public Customer findByUsernameAndPassword(String username , String password)
-    {
+
+    public Customer findByUsernameAndPassword(String username, String password) {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.loginCustomer", Customer.class);
         query.setParameter("username", username);
         query.setParameter("password", password);
         return query.getSingleResult();
     }
 
-        public Customer findCustomerByUsername(String username)
-    {
+    public Customer findCustomerByUsername(String username) {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerByUsername", Customer.class);
         query.setParameter("username", username);
         return query.getSingleResult();
     }
-        
-    public Customer findByCustomerId(Integer id)
-    {
+
+    public Customer findByCustomerId(Integer id) {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.findCustomerById", Customer.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }
-    
-    public void UpdateCustomer(Customer updateCustomer)
-    {
+
+    public void UpdateCustomer(Customer updateCustomer) {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.updateCustomerById", Customer.class);
         query.setParameter("fname", updateCustomer.getFirstName());
         query.setParameter("lname", updateCustomer.getLastName());
@@ -73,16 +65,15 @@ public class CustomerService extends AbstractService<Customer>
         query.setParameter("birth", updateCustomer.getBirthDate());
         query.setParameter("phone", updateCustomer.getPhoneNo());
         query.setParameter("id", updateCustomer.getCustomerId());
-        
+
         int updated = query.executeUpdate();
-        LOG.info("Account updated.");        
+        LOG.info("Account updated.");
     }
-    
-    public void deleteCustomerById(Integer id)
-    {
+
+    public void deleteCustomerById(Integer id) {
         TypedQuery<Customer> query = em.createNamedQuery("Customer.DeleteCustomerById", Customer.class);
         query.setParameter("id", id);
         int deleted = query.executeUpdate();
-        LOG.info("Account deleted.");     
+        LOG.info("Account deleted.");
     }
 }

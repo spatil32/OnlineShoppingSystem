@@ -20,14 +20,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "AdminFunctionalities", urlPatterns = {"/admin/adminFunctionalities"})
-public class AdminFunctionalities extends HttpServlet
-{
+@WebServlet(name = "AdminFunctionalities", urlPatterns = {"/adminFunctionalities"})
+public class AdminFunctionalities extends HttpServlet {
+
     @EJB
     FeedbackService feedbackService;
-    
+
     @EJB
     OrderService orderService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +46,7 @@ public class AdminFunctionalities extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminFunctionalities</title>");            
+            out.println("<title>Servlet AdminFunctionalities</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AdminFunctionalities at " + request.getContextPath() + "</h1>");
@@ -64,8 +65,7 @@ public class AdminFunctionalities extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.setAttribute("allFeedbacks", feedbackService.findAll());
         request.getRequestDispatcher("/WEB-INF/pages/CustomerFeedbacks.jsp").forward(request, response);
     }
@@ -80,8 +80,7 @@ public class AdminFunctionalities extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.setAttribute("allOrders", orderService.findAll());
         request.getRequestDispatcher("/WEB-INF/pages/CustomerOrders.jsp").forward(request, response);
     }
@@ -94,6 +93,5 @@ public class AdminFunctionalities extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

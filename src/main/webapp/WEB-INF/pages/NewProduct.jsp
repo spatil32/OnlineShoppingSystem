@@ -10,7 +10,7 @@
 <h1>New Product Registration</h1>
 
 <c:if test="${not empty requestScope.violations}">
-    <h2 style="color: red">Violations were found on registration page!</h2>
+    <h2 style="color: red">Violations were found on New product page!</h2>
     <ul>
         <c:forEach items="${requestScope.violations}" var="violation">
             <li>
@@ -19,8 +19,8 @@
         </c:forEach>
     </ul>
 </c:if>
-    
-<form method="POST" style="text-align: center" action="<c:url value="/admin/newProduct"/>">
+
+<form method="POST" style="text-align: center" action="<c:url value="/newProduct"/>">
     <div>
         <label for="productName">Enter Product Name&nbsp;&nbsp;</label>
         <input required class="form-horizontal" type="text" name="productName" id="productName" value="${products.productName}"/>
@@ -50,8 +50,6 @@
         <input required class="form-horizontal" type="number" name="availableQty" id="availableQty" value="${products.availableQty}"/>
     </div>
     <div/>
-        <input class="btn-danger" type="submit" name="submitProduct" id="submitProduct"/>
+    <input class="btn-danger" type="submit" name="submitProduct" id="submitProduct"/>
 </form>
-
-
 <%@include file="/WEB-INF/jspf/footer.jspf" %>

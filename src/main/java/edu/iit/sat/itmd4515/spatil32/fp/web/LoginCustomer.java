@@ -23,15 +23,16 @@ import javax.servlet.http.HttpServletResponse;
  * @author Dell
  */
 @WebServlet(name = "LoginCustomer", urlPatterns = {"/loginCustomer"})
-public class LoginCustomer extends HttpServlet 
-{
+public class LoginCustomer extends HttpServlet {
+
     @EJB
     CustomerService customerService;
-    
+
     @EJB
     ProductService productService;
     public static Integer CustomeID = null;
     private static final Logger LOG = Logger.getLogger(LoginCustomer.class.getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,7 +50,7 @@ public class LoginCustomer extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginCustomer</title>");            
+            out.println("<title>Servlet LoginCustomer</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginCustomer at " + request.getContextPath() + "</h1>");
@@ -68,8 +69,7 @@ public class LoginCustomer extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
     }
 
@@ -83,30 +83,24 @@ public class LoginCustomer extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         Customer customer = new Customer(username, password);
-        try
-        {
+        try {
             Customer foundCustomer = customerService.findByUsernameAndPassword(username, password);
             CustomeID = foundCustomer.getCustomerId();
-            if(foundCustomer.getIsAdmin() == 'Y')
-            {
+            if (foundCustomer.getIsAdmin() == 'Y') {
                 request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
-            }
-            else
-            {
+            } else {
                 request.setAttribute("allProducts", productService.findAll());
                 request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
             }
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             LOG.info("Not Found");
             request.getRequestDispatcher("error.html").forward(request, response);
-        }    }
+        }
+    }
 
     /**
      * Returns a short description of the servlet.
@@ -116,6 +110,5 @@ public class LoginCustomer extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

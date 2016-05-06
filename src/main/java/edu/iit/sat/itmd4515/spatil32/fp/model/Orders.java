@@ -19,8 +19,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Orders POJO consist of all data fields to be persisted, constructors, getters, setters and toString() method.
- * It also contains JPA mappings and persistence annotations to persist table in database.
+ * Orders POJO consist of all data fields to be persisted, constructors,
+ * getters, setters and toString() method. It also contains JPA mappings and
+ * persistence annotations to persist table in database.
+ *
  * @author Dell
  */
 @Entity
@@ -32,13 +34,13 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Orders.DeleteOrdersByCustomerId", query = "delete from Orders o where o.customer.customerId = :id")
 })
 
-public class Orders 
-{
+public class Orders {
+
     //primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
-    
+
     //mapping with customer
     //one customer many orders
     @ManyToOne

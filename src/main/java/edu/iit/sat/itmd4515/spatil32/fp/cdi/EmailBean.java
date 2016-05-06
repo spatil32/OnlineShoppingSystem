@@ -17,19 +17,17 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
 /**
  *
  * @author Dell
  */
 @Dependent
-public class EmailBean
-{
+public class EmailBean {
+
     @Resource(lookup = "demo/mailSession")
     private Session session;
 
     /**
-     *
      * @param to
      * @param subject
      * @param body
@@ -49,5 +47,4 @@ public class EmailBean
             Logger.getLogger(EmailBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

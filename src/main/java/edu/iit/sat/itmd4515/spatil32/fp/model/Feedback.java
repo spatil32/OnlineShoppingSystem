@@ -19,8 +19,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Feedback POJO consist of all data fields to be persisted, constructors, getters, setters and toString() method.
- * It also contains JPA mappings and persistence annotations to persist table in database.
+ * Feedback POJO consist of all data fields to be persisted, constructors,
+ * getters, setters and toString() method. It also contains JPA mappings and
+ * persistence annotations to persist table in database.
+ *
  * @author Dell
  */
 @Entity
@@ -31,8 +33,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Feedback.DeleteFeedbackByCustomerId", query = "delete from Feedback f where f.customer.customerId = :id")
 })
 
-public class Feedback 
-{
+public class Feedback {
+
     //primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,7 +79,7 @@ public class Feedback
      * @param feedbackDate sets date
      * @param description sets description
      * @param rating sets rating
-    */
+     */
     public Feedback(int feedbackId, Customer customer, Date feedbackDate, String description, int rating) {
         this.feedbackId = feedbackId;
         this.customer = customer;

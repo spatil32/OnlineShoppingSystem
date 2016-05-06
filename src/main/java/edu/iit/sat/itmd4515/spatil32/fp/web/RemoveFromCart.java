@@ -5,10 +5,8 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Basket;
 import edu.iit.sat.itmd4515.spatil32.fp.model.BasketProducts;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Customer;
-import edu.iit.sat.itmd4515.spatil32.fp.model.Orders;
 import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.BasketService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.Basket_ProductsService;
@@ -17,11 +15,7 @@ import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -29,30 +23,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author patils03
  */
-@WebServlet(name = "RemoveFromCart", urlPatterns = {"/customer/removeFromCart"})
-public class RemoveFromCart extends HttpServlet 
-{
+@WebServlet(name = "RemoveFromCart", urlPatterns = {"/removeFromCart"})
+public class RemoveFromCart extends HttpServlet {
+
     @EJB
     CustomerService customerService;
-    
+
     @EJB
     BasketService basketService;
-    
+
     @EJB
     OrderService orderService;
-    
+
     @EJB
     Basket_ProductsService basketProductSrvice;
-    
+
     private static final Logger LOG = Logger.getLogger(RemoveFromCart.class.getName());
-    
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -70,7 +62,7 @@ public class RemoveFromCart extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RemoveFromCart</title>");            
+            out.println("<title>Servlet RemoveFromCart</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet RemoveFromCart at " + request.getContextPath() + "</h1>");
@@ -89,11 +81,9 @@ public class RemoveFromCart extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         Long basketId = null;
-        if(!WebUtil.isEmpty(request.getParameter("basketId")))
-        {
+        if (!WebUtil.isEmpty(request.getParameter("basketId"))) {
             basketId = Long.parseLong(request.getParameter("basketId"));
             Customer loggedInCustomer = customerService.findByCustomerId(LoginCustomer.CustomeID);
             //find productid from basketproduct
@@ -103,7 +93,7 @@ public class RemoveFromCart extends HttpServlet
             //delete from basket
             basketService.deleteBasketByBasketId(basketId);
             //delete from arraylist
-            ArrayList<Products> cartProducts = (ArrayList<Products>)request.getSession().getAttribute("selectedProducts");
+            ArrayList<Products> cartProducts = (ArrayList<Products>) request.getSession().getAttribute("selectedProducts");
             LOG.info("Atta size ahe  = " + cartProducts.size());
             int productIdOfBasketProduct = basketProduct.getProductId();
             LOG.info("Delete karaycha id ahe = " + Integer.toString(productIdOfBasketProduct));
@@ -113,23 +103,14 @@ public class RemoveFromCart extends HttpServlet
                 LOG.info(cartProduct.toString());
             }
             Iterator<Products> iterator = cartProducts.iterator();
-            while(iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 Products toDelete = iterator.next();
-                if(toDelete.getProductId() == productIdOfBasketProduct)
-                {
+                if (toDelete.getProductId() == productIdOfBasketProduct) {
                     iterator.remove();
                     break;
                 }
             }
-    /*        for (Products cartProduct : cartProducts) 
-            {
-                if(cartProduct.getProductId() == productIdOfBasketProduct)
-                    cartProducts.remove(cartProduct);
-                    
-            }*/
             request.setAttribute("basketProducts", basketService.findAllBasketByCustomerId(LoginCustomer.CustomeID));
-
             request.getRequestDispatcher("/WEB-INF/pages/CartProducts.jsp").forward(request, response);
         }
     }
@@ -144,9 +125,7 @@ public class RemoveFromCart extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        
+            throws ServletException, IOException {
     }
 
     /**
@@ -157,6 +136,5 @@ public class RemoveFromCart extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

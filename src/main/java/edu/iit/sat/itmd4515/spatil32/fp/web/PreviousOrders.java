@@ -20,14 +20,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "PreviousOrders", urlPatterns = {"/customer/previousOrders"})
-public class PreviousOrders extends HttpServlet
-{
+@WebServlet(name = "PreviousOrders", urlPatterns = {"/previousOrders"})
+public class PreviousOrders extends HttpServlet {
+
     @EJB
     OrderService orderService;
-    
+
     @EJB
     ProductService productService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +46,7 @@ public class PreviousOrders extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PreviousOrders</title>");            
+            out.println("<title>Servlet PreviousOrders</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet PreviousOrders at " + request.getContextPath() + "</h1>");
@@ -64,9 +65,8 @@ public class PreviousOrders extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        request.setAttribute("allOrders",orderService.findOrdersByCustomerId(LoginCustomer.CustomeID));
+            throws ServletException, IOException {
+        request.setAttribute("allOrders", orderService.findOrdersByCustomerId(LoginCustomer.CustomeID));
         request.getRequestDispatcher("/WEB-INF/pages/PreviousOrders.jsp").forward(request, response);
     }
 
@@ -80,8 +80,7 @@ public class PreviousOrders extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.setAttribute("allProducts", productService.findAll());
         request.getRequestDispatcher("/WEB-INF/pages/Products.jsp").forward(request, response);
     }
@@ -94,6 +93,6 @@ public class PreviousOrders extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

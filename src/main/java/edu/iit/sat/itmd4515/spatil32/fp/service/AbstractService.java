@@ -13,38 +13,32 @@ import javax.persistence.PersistenceContext;
  *
  * @author Dell
  */
-public abstract class AbstractService<T>
-{
+public abstract class AbstractService<T> {
+
     @PersistenceContext(unitName = "spatil32PU")
     protected EntityManager em;
-    
+
     private Class<T> entityClass;
 
-    public AbstractService(Class<T> entityClass)
-    {
+    public AbstractService(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
-    
-    public void create(T entity)
-    {
+
+    public void create(T entity) {
         em.persist(entity);
     }
-    
-    public T find(Object id)
-    {
+
+    public T find(Object id) {
         return em.find(entityClass, id);
     }
-    
-    public void update(T entity)
-    {
+
+    public void update(T entity) {
         em.merge(entity);
     }
-    
-    public void delete(T entity)
-    {
+
+    public void delete(T entity) {
         em.remove(entity);
     }
-    
+
     public abstract List<T> findAll();
-    
 }

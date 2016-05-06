@@ -15,7 +15,7 @@ import javax.persistence.Table;
 /**
  * Used to store Group information
  *
- * @author dwadekar
+ * @author Dell
  */
 @Entity
 @Table(name = "sec_group")
@@ -98,5 +98,4 @@ public class Group {
     public void setGroupMembers(List<User> groupMembers) {
         this.groupMembers = groupMembers;
     }
-
 }

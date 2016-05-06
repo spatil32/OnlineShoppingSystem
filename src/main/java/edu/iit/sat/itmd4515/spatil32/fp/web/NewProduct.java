@@ -27,17 +27,16 @@ import javax.validation.Validator;
  *
  * @author Dell
  */
-@WebServlet(name = "NewProduct", urlPatterns = {"/admin/newProduct"})
-public class NewProduct extends HttpServlet 
-{
+@WebServlet(name = "NewProduct", urlPatterns = {"/newProduct"})
+public class NewProduct extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(NewProduct.class.getName());
     @EJB
     ProductService productService;
-    
+
     @Resource
     Validator validator;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,7 +54,7 @@ public class NewProduct extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewProduct</title>");            
+            out.println("<title>Servlet NewProduct</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewProduct at " + request.getContextPath() + "</h1>");
@@ -74,8 +73,7 @@ public class NewProduct extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/NewProduct.jsp").forward(request, response);
     }
 
@@ -89,34 +87,29 @@ public class NewProduct extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         String productName = WebUtil.trimParam(request.getParameter("productName"));
         String mfgDate = WebUtil.trimParam(request.getParameter("mfgDate"));
         String[] date = mfgDate.split("-");
         int mfgDay = Integer.parseInt(date[2]);
         int mfgMonth = Integer.parseInt(date[1]);
         int mfgYear = Integer.parseInt(date[0]);
-        Date mfgdate = new GregorianCalendar(mfgYear,mfgMonth ,mfgDay).getTime();
+        Date mfgdate = new GregorianCalendar(mfgYear, mfgMonth, mfgDay).getTime();
         String category = WebUtil.trimParam(request.getParameter("category"));
         Integer price = Integer.parseInt(WebUtil.trimParam(request.getParameter("price")));
         Integer discount = Integer.parseInt(WebUtil.trimParam(request.getParameter("discount")));
         Integer totalQty = Integer.parseInt(WebUtil.trimParam(request.getParameter("totalQty")));
         Integer availableQty = Integer.parseInt(WebUtil.trimParam(request.getParameter("availableQty")));
-        
+
         Products newProduct = new Products(productName, mfgdate, category.charAt(0), price, discount, totalQty, availableQty);
         Set<ConstraintViolation<Products>> violations = validator.validate(newProduct);
-        
-        if(violations.isEmpty())
-        {
+
+        if (violations.isEmpty()) {
             productService.create(newProduct);
             request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
-        }
-        else
-        {
+        } else {
             LOG.info("There are " + violations.size() + " violations in new product form as below : \n");
-            for (ConstraintViolation<Products> violation : violations) 
-            {
+            for (ConstraintViolation<Products> violation : violations) {
                 LOG.info("#####" + violation.getRootBeanClass().getSimpleName()
                         + "." + violation.getPropertyPath() + " failed violation:\t"
                         + violation.getInvalidValue() + " failed with message " + violation.getMessage());

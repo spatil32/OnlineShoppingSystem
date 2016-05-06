@@ -27,18 +27,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author Dell
  */
 @WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
-public class AdminServlet extends HttpServlet
-{
+public class AdminServlet extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(AdminServlet.class.getName());
     @EJB
     CustomerServiceLogin customerServiceLogin;
-    
+
     @EJB
     AdminService adminService;
-    
+
     @EJB
     CustomerService customerService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -56,24 +56,18 @@ public class AdminServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminServlet</title>");            
+            out.println("<title>Servlet AdminServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            
-            LOG.info("servlet madhe ala");
-            if(request.isUserInRole("ADMIN"))
-            {
-                LOG.info("admin role madhe ahe");
+
+            if (request.isUserInRole("ADMIN")) {
                 Admin admin = adminService.findByUsername(request.getRemoteUser());
                 String username = admin.getUser().getUserName();
                 out.println("<h1>Welcome Employee: " + username + "</hl>");
                 Customer loggedInCustomer = customerService.findCustomerByUsername(username);
                 CustomeID = loggedInCustomer.getCustomerId();
                 request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
-            }
-            else
-            {
-                LOG.info("Customer role madhe ahe");
+            } else {
                 CustomersLogin cust = customerServiceLogin.findByUsername(request.getRemoteUser());
                 String username = cust.getUser().getUserName();
                 out.println("<h1>Welcome Employee: " + username + "</hl>");
@@ -94,9 +88,8 @@ public class AdminServlet extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-         processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -121,6 +114,5 @@ public class AdminServlet extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

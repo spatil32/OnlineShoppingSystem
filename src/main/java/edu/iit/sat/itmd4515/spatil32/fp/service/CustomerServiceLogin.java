@@ -15,19 +15,17 @@ import javax.persistence.TypedQuery;
  * @author Dell
  */
 @Stateless
-public class CustomerServiceLogin extends AbstractService<CustomersLogin>
-{
+public class CustomerServiceLogin extends AbstractService<CustomersLogin> {
 
-    public CustomerServiceLogin()
-    {
+    public CustomerServiceLogin() {
         super(CustomersLogin.class);
     }
-    
+
     @Override
     public List<CustomersLogin> findAll() {
         return em.createNamedQuery("CustomersLogin.findAll").getResultList();
     }
-    
+
     public CustomersLogin findByUsername(String username) {
         TypedQuery<CustomersLogin> query = em.createNamedQuery("CustomersLogin.findByUsername", CustomersLogin.class);
         query.setParameter("username", username);

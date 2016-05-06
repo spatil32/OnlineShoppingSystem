@@ -14,31 +14,33 @@
     <div class="panel panel-primary" style="border: none;">
         <div class="panel-body panel-body-landing">
 
-<form method="POST" style="text-align: center" action="<c:url value="${requestScope.servletPath}/admin/navigationServlet"/>">
-<table class="table">
-        <thead>
-            <tr class="info">
-                <th>Feedback Id</th>
-                <th>Customer Name</th>
-                <th>Feedback Date</th>
-                <th>Rating</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${requestScope.allFeedbacks}" var="feedback">
-                <tr class="danger">
-                    <td>${feedback.feedbackId}</td>
-                    <td>${feedback.customer.firstName}</td>
-                    <td>${feedback.feedbackDate}</td>
-                    <td>${feedback.rating}</td>
-                    <td>${feedback.description}</td>
-                </tr>
-        </c:forEach>
-        <br/>
-    </tbody>
-</table>
-<button class="btn-lg" type="submit" value="Go Back">Go Back</button>
-</form>
-        </div></div></div>
+            <form method="POST" style="text-align: center" action="<c:url value="${requestScope.servletPath}/navigationServlet"/>">
+                <table class="table">
+                    <thead>
+                        <tr class="info">
+                            <th>Feedback Id</th>
+                            <th>Customer Name</th>
+                            <th>Feedback Date</th>
+                            <th>Rating</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.allFeedbacks}" var="feedback">
+                            <tr class="danger">
+                                <td>${feedback.feedbackId}</td>
+                                <td>${feedback.customer.firstName}</td>
+                                <td>${feedback.feedbackDate}</td>
+                                <td>${feedback.rating}</td>
+                                <td>${feedback.description}</td>
+                            </tr>
+                        </c:forEach>
+                    <br/>
+                    </tbody>
+                </table>
+                <button class="btn-lg" type="submit" value="Go Back">Go Back</button>
+            </form>
+        </div>
+    </div>
+</div>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

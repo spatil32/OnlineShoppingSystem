@@ -12,15 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * Used to store user information for login
  *
- * @author dwadekar
+ * @author Dell
  */
 @Entity
 @Table(name = "sec_user")
@@ -62,7 +59,7 @@ public class User {
         String digestPassword = DigestUtils.sha256Hex(this.password);
         this.password = digestPassword;
     }
-*/
+     */
     /**
      * Used to User to a respective Group
      *
@@ -130,5 +127,4 @@ public class User {
     public void setUserGroups(List<Group> userGroups) {
         this.userGroups = userGroups;
     }
-
 }

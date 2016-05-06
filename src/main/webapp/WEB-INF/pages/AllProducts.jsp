@@ -12,7 +12,7 @@
 <div class="pricing-table">
     <div class="panel panel-primary" style="border: none;">
         <div class="panel-body panel-body-landing">
-            <form method="POST" style="text-align: center" action="<c:url value="/admin/navigationServlet"/>">
+            <form method="POST" style="text-align: center" action="<c:url value="/navigationServlet"/>">
                 <table class="table">
                     <thead>
                         <tr class="info">
@@ -41,7 +41,7 @@
                                     <a href="<c:url value="${requestScope.servletPath}/editProduct"><c:param name="productId" value="${product.productId}"/></c:url>">Edit Product</a>
                                     </td>
                                     <td>
-                                        <a href="<c:url value="${requestScope.servletPath}/admin/navigationServlet"><c:param name="productId" value="${product.productId}"/></c:url>">Delete Product</a>
+                                        <a href="<c:url value="${requestScope.servletPath}/navigationServlet"><c:param name="productId" value="${product.productId}"/></c:url>">Delete Product</a>
                                     </td>
                                 </tr>
                         </c:forEach>
@@ -49,7 +49,8 @@
                     </tbody>
                 </table>
         </div>
-    </div></div>
+    </div>
+</div>
 <input class="btn-danger" type="submit" value="Go Back" name="GoBack" id="GoBack"/>
 </form>
 <%@include file="/WEB-INF/jspf/footer.jspf" %> 

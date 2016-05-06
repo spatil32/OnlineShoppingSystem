@@ -5,7 +5,6 @@
  */
 package edu.iit.sat.itmd4515.spatil32.fp.web;
 
-import edu.iit.sat.itmd4515.spatil32.fp.model.Products;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,11 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dell
  */
-@WebServlet(name = "NavigationServlet", urlPatterns = {"/admin/navigationServlet"})
-public class NavigationServlet extends HttpServlet 
-{
+@WebServlet(name = "NavigationServlet", urlPatterns = {"/navigationServlet"})
+public class NavigationServlet extends HttpServlet {
+
     @EJB
     ProductService productService;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,7 +42,7 @@ public class NavigationServlet extends HttpServlet
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NavigationServlet</title>");            
+            out.println("<title>Servlet NavigationServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NavigationServlet at " + request.getContextPath() + "</h1>");
@@ -61,8 +61,7 @@ public class NavigationServlet extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         Long productId = null;
         if (!WebUtil.isEmpty(request.getParameter("productId"))) {
             productId = Long.parseLong(WebUtil.trimParam(request.getParameter("productId")));
@@ -82,8 +81,7 @@ public class NavigationServlet extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
     }
 
