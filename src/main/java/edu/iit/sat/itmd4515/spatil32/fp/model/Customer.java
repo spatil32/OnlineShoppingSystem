@@ -103,6 +103,11 @@ public class Customer
     public Customer() {
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     */
     public Customer(String username, String password) 
     {
         this.username = username;
@@ -198,6 +203,19 @@ public class Customer
         this.basket = basket;
     }
 
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param gender
+     * @param address
+     * @param email
+     * @param birthDate
+     * @param phoneNo
+     * @param username
+     * @param password
+     */
     public Customer(String firstName, String lastName, int age, char gender, String address, String email, Date birthDate, String phoneNo, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -212,6 +230,20 @@ public class Customer
         this.isAdmin = 'N';
     }
 
+    /**
+     *
+     * @param customerId
+     * @param firstName
+     * @param lastName
+     * @param age
+     * @param gender
+     * @param address
+     * @param email
+     * @param birthDate
+     * @param phoneNo
+     * @param username
+     * @param password
+     */
     public Customer(int customerId, String firstName, String lastName, int age, char gender, String address, String email, Date birthDate, String phoneNo, String username, String password) {
         this.customerId = customerId;
         this.firstName = firstName;

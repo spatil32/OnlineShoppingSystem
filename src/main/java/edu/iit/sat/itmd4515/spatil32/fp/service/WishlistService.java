@@ -20,21 +20,37 @@ public class WishlistService extends AbstractService<Wishlist> {
 
     private static final Logger LOG = Logger.getLogger(WishlistService.class.getName());
 
+    /**
+     *
+     */
     public WishlistService() {
         super(Wishlist.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Wishlist> findAll() {
         return em.createNamedQuery("Wishlist.seeAllWishlists").getResultList();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public List<Wishlist> findWishlistByCustomerId(Integer id) {
         TypedQuery<Wishlist> query = em.createNamedQuery("Wishlist.seeWishlistsByCustomerId", Wishlist.class);
         query.setParameter("id", id);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteWishlistProductByProductId(Long id) {
         TypedQuery<Wishlist> query = em.createNamedQuery("Wishlist.deleteWishlistsByProductId", Wishlist.class);
         query.setParameter("id", id);
@@ -42,6 +58,10 @@ public class WishlistService extends AbstractService<Wishlist> {
         LOG.info("Deleted product from wishlist");
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteWishlistByCustomerId(Integer id) {
         TypedQuery<Wishlist> query = em.createNamedQuery("Wishlist.deleteWishlistsByCustomerId", Wishlist.class);
         query.setParameter("id", id);

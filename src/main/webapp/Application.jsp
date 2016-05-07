@@ -6,15 +6,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%@include file="/WEB-INF/jspf/header.jspf" %>
-
-
-<form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/newCustomer"/>">
-    <button class="btn-lg" type="submit" value="Submit">Register New Customer</button>
-    <label><b>This button lets user create new shopping account.</b></label>    
-</form>
-<br/><br/>
 
 <form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/loginCustomer"/>">
     <button class="btn-lg" type="submit" value="Submit">Login Customer</button>

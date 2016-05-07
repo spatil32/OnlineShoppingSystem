@@ -29,6 +29,9 @@ public class EmailService {
     @Inject
     EmailBean emailBean;
 
+    /**
+     *
+     */
     public EmailService() {
     }
 
@@ -86,6 +89,11 @@ public class EmailService {
         this.email = email;
     }
 
+    /**
+     *
+     * @param customer
+     * @param order
+     */
     public void doSendMail(Customer customer, Orders order) {
         LOG.log(Level.INFO, "Sending mail to {0}", customer.getFirstName());
         LOG.log(Level.INFO, "Sending mail on email {0}", customer.getEmail());
@@ -100,4 +108,13 @@ public class EmailService {
         LOG.log(Level.INFO, "Mail sent to {0}", customer.getEmail());
     }
 
+    /**
+     *
+     * @param body
+     */
+    public void doSendOfferMail(String body)
+    {
+        String subject = "Exciting Offers..!!";
+        emailBean.sendMail("patilsr91@gmail.com", subject, body);        
+    }
 }

@@ -37,6 +37,12 @@
                         <label><b>This button lets admin see all customers orders.</b></label>    
                     </form>
                 </td>
+                <td>
+                    <form method="GET" style="text-align: center" action="<c:url value="${requestScope.servletPath}/newCustomer"/>">
+                        <button class="btn-lg" type="submit" value="Submit">Register New Customer</button>
+                        <label><b>This button lets admin create new shopping account.</b></label>    
+                    </form>
+                </td>
             </table>
         </div>
     </div>

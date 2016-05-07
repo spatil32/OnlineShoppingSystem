@@ -30,6 +30,10 @@ public class LoginCustomer extends HttpServlet {
 
     @EJB
     ProductService productService;
+
+    /**
+     *
+     */
     public static Integer CustomeID = null;
     private static final Logger LOG = Logger.getLogger(LoginCustomer.class.getName());
 

@@ -33,13 +33,25 @@ public class BasketProducts {
     private int basketId;
     private int productId;
 
+    /**
+     *
+     */
     public BasketProducts() {
     }
 
+    /**
+     *
+     * @param productId
+     */
     public BasketProducts(int productId) {
         this.productId = productId;
     }
 
+    /**
+     *
+     * @param productId
+     * @param basketId
+     */
     public BasketProducts(int productId, int basketId) {
         this.productId = productId;
         this.basketId = basketId;
@@ -50,10 +62,18 @@ public class BasketProducts {
         return "BasketProducts{" + "basketProductId=" + basketProductId + ", basketId=" + basketId + ", productId=" + productId + '}';
     }
 
+    /**
+     *
+     * @return
+     */
     public int getBasketId() {
         return basketId;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getProductId() {
         return productId;
     }

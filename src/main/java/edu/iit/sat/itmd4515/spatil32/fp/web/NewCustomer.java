@@ -109,7 +109,7 @@ public class NewCustomer extends HttpServlet {
 
         if (violations.isEmpty()) {
             customerService.create(newCustomer);
-            request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/Administrator.jsp").forward(request, response);
         } else {
             LOG.info("There are " + violations.size() + " violations in registration form as below : \n");
             for (ConstraintViolation<Customer> violation : violations) {

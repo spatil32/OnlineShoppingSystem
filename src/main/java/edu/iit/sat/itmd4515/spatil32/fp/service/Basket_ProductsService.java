@@ -20,15 +20,25 @@ public class Basket_ProductsService extends AbstractService<BasketProducts> {
 
     private static final Logger LOG = Logger.getLogger(Basket_ProductsService.class.getName());
 
+    /**
+     *
+     */
     public Basket_ProductsService() {
         super(BasketProducts.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<BasketProducts> findAll() {
         return em.createNamedQuery("BasketProducts.SelectAll").getResultList();
     }
 
+    /**
+     *
+     */
     public void removeAll() {
         List<BasketProducts> list = em.createNamedQuery("BasketProducts.SelectAll").getResultList();
         LOG.info("Basket products query size : " + list.size());
@@ -38,6 +48,10 @@ public class Basket_ProductsService extends AbstractService<BasketProducts> {
         LOG.info("Deleted from basket_Products");
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteByBasketId(Long id) {
         TypedQuery<BasketProducts> query = em.createNamedQuery("BasketProducts.DeleteByBasketId", BasketProducts.class);
         query.setParameter("id", id);
@@ -45,6 +59,11 @@ public class Basket_ProductsService extends AbstractService<BasketProducts> {
         LOG.info("Selected product deleted from basket.");
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public BasketProducts findBasketProductByBasketId(Long id) {
         TypedQuery<BasketProducts> query = em.createNamedQuery("BasketProducts.FindByBasketId", BasketProducts.class);
         query.setParameter("id", id);

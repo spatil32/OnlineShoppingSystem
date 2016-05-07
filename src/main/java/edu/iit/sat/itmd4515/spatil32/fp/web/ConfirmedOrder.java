@@ -15,6 +15,7 @@ import edu.iit.sat.itmd4515.spatil32.fp.service.CustomerService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.EmailService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.OrderService;
 import edu.iit.sat.itmd4515.spatil32.fp.service.ProductService;
+import edu.iit.sat.itmd4515.spatil32.fp.service.TimerBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ public class ConfirmedOrder extends HttpServlet
     @EJB
     EmailService emailService;
 
+    @EJB
+    TimerBean timerBean;
     
     private static final Logger LOG = Logger.getLogger(ConfirmedOrder.class.getName());
 

@@ -17,15 +17,27 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class CustomerServiceLogin extends AbstractService<CustomersLogin> {
 
+    /**
+     *
+     */
     public CustomerServiceLogin() {
         super(CustomersLogin.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<CustomersLogin> findAll() {
         return em.createNamedQuery("CustomersLogin.findAll").getResultList();
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     public CustomersLogin findByUsername(String username) {
         TypedQuery<CustomersLogin> query = em.createNamedQuery("CustomersLogin.findByUsername", CustomersLogin.class);
         query.setParameter("username", username);

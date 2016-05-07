@@ -20,21 +20,37 @@ public class ProductService extends AbstractService<Products> {
 
     private static final Logger LOG = Logger.getLogger(ProductService.class.getName());
 
+    /**
+     *
+     */
     public ProductService() {
         super(Products.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Products> findAll() {
         return em.createNamedQuery("Products.seeAllProducts").getResultList();
     }
 
+    /**
+     *
+     * @param productId
+     * @return
+     */
     public Products findByProductID(Long productId) {
         TypedQuery<Products> query = em.createNamedQuery("Products.findProductById", Products.class);
         query.setParameter("id", productId);
         return query.getSingleResult();
     }
 
+    /**
+     *
+     * @param product
+     */
     public void updateProducByProductId(Products product) {
         TypedQuery<Products> query = em.createNamedQuery("Products.UpdateProductById", Products.class);
         query.setParameter("name", product.getProductName());
@@ -49,6 +65,10 @@ public class ProductService extends AbstractService<Products> {
         LOG.info("Product Updated...");
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteProductById(Long id) {
         TypedQuery<Products> query = em.createNamedQuery("Products.DeleteProductById", Products.class);
         query.setParameter("id", id);

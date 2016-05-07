@@ -17,15 +17,26 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class FeedbackService extends AbstractService<Feedback> {
 
+    /**
+     *
+     */
     public FeedbackService() {
         super(Feedback.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Feedback> findAll() {
         return em.createNamedQuery("Feedback.seeAllFeedbacks").getResultList();
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteFeedbackByCustomerId(Integer id) {
         TypedQuery<Feedback> query = em.createNamedQuery("Feedback.DeleteFeedbackByCustomerId", Feedback.class);
         query.setParameter("id", id);

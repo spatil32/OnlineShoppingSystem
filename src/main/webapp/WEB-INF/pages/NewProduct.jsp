@@ -31,7 +31,13 @@
     </div>
     <div>
         <label for="category">Select Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input required class="form-horizontal" type="text" name="category" id="category" value="${products.category}"/>
+        <select name="category" class="form-horizontal">
+            <option value="Books">Books</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Travel">Travel</option>
+        </select>
     </div>
     <div>
         <label for="price">Enter Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>

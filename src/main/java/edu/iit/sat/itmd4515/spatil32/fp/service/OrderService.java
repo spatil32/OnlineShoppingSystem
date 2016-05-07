@@ -17,21 +17,37 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class OrderService extends AbstractService<Orders> {
 
+    /**
+     *
+     */
     public OrderService() {
         super(Orders.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Orders> findAll() {
         return em.createNamedQuery("Orders.seeAllOrders").getResultList();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public List<Orders> findOrdersByCustomerId(Integer id) {
         TypedQuery<Orders> query = em.createNamedQuery("Orders.findOrdersByCustomerId", Orders.class);
         query.setParameter("id", id);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param id
+     */
     public void deleteOrdersByCustomerId(Integer id) {
         TypedQuery<Orders> query = em.createNamedQuery("Orders.DeleteOrdersByCustomerId", Orders.class);
         query.setParameter("id", id);

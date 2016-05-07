@@ -42,6 +42,9 @@ public class AddToCart extends HttpServlet
     @EJB
     CustomerService customerService;
     
+    /**
+     *
+     */
     public List<Products> cartProducts = new ArrayList<>();
     private static final Logger LOG = Logger.getLogger(AddToCart.class.getName());
     

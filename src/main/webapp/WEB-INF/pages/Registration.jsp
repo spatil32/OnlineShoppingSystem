@@ -39,7 +39,8 @@
     </div>
     <div>
         <label for="gender">Enter Gender&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input required class="form-horizontal" type="text" name="gender" id="gender" value="${customer.gender}"/>
+        <input class="form-horizontal" name="gender" id="gender" type="radio" value="Male" checked/> :Male
+        <input class="form-horizontal" name="gender" id="gender" type="radio" value="Female"/> :Female
     </div>
     <div>
         <label for="address">Enter Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>

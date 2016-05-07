@@ -101,7 +101,7 @@ public class DeleteAccount extends HttpServlet {
         request.logout();
         customerSerivce.deleteCustomerById(LoginCustomer.CustomeID);
         LoginCustomer.CustomeID = null;
-        request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+        request.getRequestDispatcher("login.html").forward(request, response);
     }
 
     /**
